@@ -64,12 +64,6 @@ $(document).ready(
                 sumbitButton.prop('disabled', false);
             }
 
-
-            //  if(Number(quantity) >= Number($(currentlyInStorage).val())) {
-            //     requestAmount.style.border = '3px solid #FF0000';
-            //  } else if(Number(quantity) <= Number($(currentlyInStorage).val())){
-            //     requestAmount.style.border = '3px solid #0000FF';
-            //  }
          })
 
          $('.submit-button').on('click', function () {
@@ -79,6 +73,7 @@ $(document).ready(
             var warehouseSelect = $(buttonId).siblings('.warehouse-select');
             var warehouseId = warehouseSelect.val();
             var productId = $(buttonId).siblings('.productIdInput').val();
+            var productName = $(buttonId).siblings('.productNameInput').val();
             var requestAmount = $(buttonId).siblings(".insert-div").children(".request-amount").val();
             var body = {}
 
@@ -98,6 +93,11 @@ $(document).ready(
                 cache: false,
                 timeout: 60000,
                 success: function(data) {
+                    if(+requestAmount > 1) {
+                        alert("Successfully added " + +requestAmount + " more copies of " + productName);
+                    }else {
+                        alert("Successfully added " + +requestAmount + " more copy of " + productName);
+                    }
                     location.reload(true);
                 },
                 error: function(e) {
@@ -106,6 +106,45 @@ $(document).ready(
                 }
             })
 
+         })
+
+         $('.delete-button').on('click', function() {
+            var deleteButton = this;
+            var productId = $(deleteButton).parent('.button-td').siblings('.td-dropdown').children('.dropdown-menu').children('#request-form')
+                            .children('.div-list-dropdown').children('.productIdInput').val();
+            var storeId = $('#storeIdInput').val();
+            var productName = $(deleteButton).parent('.button-td').siblings('.td-dropdown').children('.dropdown-menu').children('#request-form')
+            .children('.div-list-dropdown').children('.productNameInput').val();
+
+            console.log(productId);
+            console.log(storeId);
+            console.log(productName);
+
+            var body = {};
+            body["storeId"] = +storeId;
+            body["productId"] = +productId;
+
+            var bodyAsJson = JSON.stringify(body);
+            
+            console.log(body);
+
+            $.ajax({
+                type:'PATCH',
+                contentType: 'application/json',
+                url: "/storestock/delete-product-store",
+                data: bodyAsJson,
+                dataType: 'json',
+                cache: false,
+                timeout: 60000,
+                success: function(data) {
+                    alert('Successfully deleted ' + productName);
+                    location.reload(true);
+                },
+                error: function(e) {
+                    var response = JSON.parse(e.responseText);
+                    alert(response.prettyErrorMessage);
+                }
+            })
          })
     }
 );

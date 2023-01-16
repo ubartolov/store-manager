@@ -24,6 +24,8 @@
         crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/storedetail.js}"></script>
 
+<input type="hidden" th:value="${storeId}" id="storeIdInput">
+
 <div class="container">
     <div th:if="${not #lists.isEmpty(storeStock)}">
         <table class="table table-striped">
@@ -31,14 +33,15 @@
                 <th>Product Name</th>
                 <th>Quantity</th>
                 <th>Price</th>
-                <th></th>
+                <th>Add More</th>
+                <th>Remove Product</th>
 
             </tr>
             <tr class="table-row-id" th:each="stores: ${storeStock}">
-                <td th:text="${stores.productName}"></td>
-                <td th:text="${stores.quantity}"></td>
-                <td th:text="${stores.productPrice}"></td>
-                <td class="dropdown show">
+                <td class="td-product-name" th:text="${stores.productName}"></td>
+                <td class="td-quantity" th:text="${stores.quantity}"></td>
+                <td class="td-product-price" th:text="${stores.productPrice}"></td>
+                <td class="dropdown show td-dropdown">
                     <a class="btn btn-secondary dropdown-toggle dropdownMenuLink" href="#" role="button" id="dropdownMenuLink"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Add
@@ -46,9 +49,10 @@
 
                     <div id="add-product-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <form class="form-horizontal" id="request-form">
-                            <div class="px-4 py-3" id="div-list-dropdown" th:if="${not #lists.isEmpty(warehouses)}">
+                            <div class="px-4 py-3 div-list-dropdown" th:if="${not #lists.isEmpty(warehouses)}">
                                 <input type="hidden" th:value="${stores.storeId}" class="storeIdInput">
                                 <input type="hidden" th:value="${stores.productId}" class="productIdInput">
+                                <input type="hidden" th:value="${stores.productName}" class="productNameInput">
                                 <h6>Select Warehouse</h6>
                                 <select class="form-select form-select-lg mb-3 warehouse-select"
                                         aria-label=".form-select-lg example">
@@ -70,15 +74,18 @@
                                     <input type="number" class="form-control request-amount">
                                 </div>
 
-                                <button type="button" class="btn btn-primary submit-button">Request</button>
+                                <button type="button" class="btn btn-success submit-button">Request</button>
 
                             </div>
                         </form>
                     </div>
                 </td>
+                <td class="button-td">
+                    <button type="button" class="btn btn-danger delete-button">Delete</button>
+                </td>
             </tr>
         </table>
-        <a class="btn btn-primary" th:href="${'/store/requestproduct/' + storeId}">Request New Product</a>
+        <a class="btn btn-success" th:href="${'/store/requestproduct/' + storeId}">Request New Product</a>
     </div>
 </div>
 
