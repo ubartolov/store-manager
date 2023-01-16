@@ -2,8 +2,7 @@ package com.example.storemanager.service.impl;
 
 import com.example.storemanager.dao.StoreRepository;
 import com.example.storemanager.dao.StoreStockRepository;
-import com.example.storemanager.dto.RequestProductDto;
-import com.example.storemanager.dto.StoreStockDto;
+import com.example.storemanager.dto.*;
 import com.example.storemanager.model.Product;
 import com.example.storemanager.model.Store;
 import com.example.storemanager.model.StoreStock;
@@ -75,6 +74,14 @@ public class StoreStockServiceImpl implements StoreStockService {
         storeStockRepository.delete(storeStock);
     }
 
+    @Override
+    public void deleteProductFromStoreStock(DeleteProductDto deleteProductDto) {
+        Store store = storeService.findById(deleteProductDto.getStoreId());
+        Product product = productService.findById(deleteProductDto.getProductId());
+        StoreStock existingStoreStock = findByStoreAndProduct(store, product);
+        delete(existingStoreStock);
+    }
+
 
     @Override
     public StoreStock getStockForWarehouseAndProduct(Long warehouseId, Long productId) {
@@ -98,6 +105,13 @@ public class StoreStockServiceImpl implements StoreStockService {
     public void addNewProductToStoreList(List<RequestProductDto> requestProductDtoList) {
         for (RequestProductDto requestProductDto : requestProductDtoList) {
             addNewProductToStore(requestProductDto);
+        }
+    }
+
+    @Override
+    public void addNewProductToWarehouseList(List<RequestProductWarehouseDto> warehouseDtoList) {
+        for (RequestProductWarehouseDto requestProductWarehouseDto : warehouseDtoList) {
+            addNewProductToWarehouse(requestProductWarehouseDto);
         }
     }
 
@@ -154,6 +168,22 @@ public class StoreStockServiceImpl implements StoreStockService {
     }
 
     @Override
+    public void addNewProductToWarehouse(RequestProductWarehouseDto warehouseDto) {
+        Product product = new Product();
+        product.setProductName(warehouseDto.getProductName());
+        product.setProductPrice(warehouseDto.getProductPrice());
+        productService.saveOrUpdate(product);
+
+        Store warehouse = storeService.findById(warehouseDto.getWarehouseId());
+        StoreStock storeStock = new StoreStock();
+        storeStock.setStore(warehouse);
+        storeStock.setQuantity(warehouseDto.getRequestAmount());
+        storeStock.setProduct(product);
+        storeStockRepository.save(storeStock);
+
+    }
+
+    @Override
     public StoreStock findByStoreAndProduct(Store store, Product product) {
         Optional<StoreStock> optionalStoreStock = storeStockRepository.findByStoreAndProduct(store, product);
         if (optionalStoreStock.isPresent()) {
@@ -162,7 +192,7 @@ public class StoreStockServiceImpl implements StoreStockService {
         return null;
     }
 
-
+    @Override
     public List<StoreStockDto> getDetailsById(Long storeId) {
         List<StoreStockDto> list = new ArrayList<>();
         Store store = storeService.findById(storeId);
@@ -179,5 +209,20 @@ public class StoreStockServiceImpl implements StoreStockService {
         return list;
     }
 
+    @Override
+    public void updateProductQuantity(UpdateProductDto updateProductDto) {
+        Store warehouseId = storeService.findById(updateProductDto.getWarehouseId());
+        Product productId = productService.findById(updateProductDto.getProductId());
+        Optional<StoreStock> existingStoreStock = storeStockRepository.findByStoreAndProduct(warehouseId, productId);
+        validationService.validateInsertAmount(updateProductDto.getRequestAmount());
+
+        StoreStock storeStock;
+
+        if (existingStoreStock.isPresent()) {
+            storeStock = existingStoreStock.get();
+            storeStock.setQuantity(storeStock.getQuantity() + updateProductDto.getRequestAmount());
+            storeStockRepository.save(storeStock);
+        }
+    }
 
 }

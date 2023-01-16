@@ -1,6 +1,8 @@
 $(document).ready(
 
     function () {
+        $('.request-button').prop('disabled', true);
+
         $(".dropdownMenuLink").click(function() {
             var submitButton = $('.submit-button');
             var insertAmount = $('.request-amount');
@@ -93,6 +95,7 @@ $(document).ready(
                 + '</tr>'
 
             $('#requestListTable').append(tableRow);
+            $('.request-button').prop('disabled', false);
             
             $(this).siblings('.quantity-div').children('.quantity-label').text('');
             $('.request-form').trigger("reset");
@@ -156,46 +159,3 @@ $(document).ready(
 
 
 );
-
-
-
-
-
-
-
-
-
-
-
-
-// var buttonId = this;
-//             var storeId = $('#storeIdInput').val();
-
-//             var warehouseSelect = $(buttonId).siblings('.warehouse-select');
-//             var warehouseId = warehouseSelect.val();
-//             var productId = $(buttonId).parent().parent().parent().parent().siblings('.productIdInput').val();
-//             var requestAmount = $(buttonId).siblings(".insert-div").children(".request-amount").val();
-//             var body = {}
-
-//             body['storeId'] = +storeId;
-//             body['warehouseId'] = +warehouseId;
-//             body['productId'] = +productId;
-//             body['requestAmount'] = +requestAmount;
-
-//             var bodyAsJson = JSON.stringify(body);
-
-//             $.ajax({
-//                 type:'POST',
-//                 contentType: 'application/json',
-//                 url: "/storestock/store-new-product",
-//                 data: bodyAsJson,
-//                 dataType: 'json',
-//                 cache: false,
-//                 timeout: 60000,
-//                 success: function(data) {
-//                     window.location = "/store/storedetails/" + storeId;
-//                 },
-//                 error: function(e) {
-//                     console.log('ERROR : ' + e);
-//                 }
-//             })
