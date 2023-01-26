@@ -1,6 +1,8 @@
 package com.example.storemanager.service.impl;
 
 import com.example.storemanager.dao.WorkerRepository;
+import com.example.storemanager.dto.WorkerInfoDto;
+import com.example.storemanager.model.Store;
 import com.example.storemanager.model.Worker;
 import com.example.storemanager.service.WorkerService;
 import org.springframework.stereotype.Service;
@@ -12,9 +14,10 @@ import java.util.Optional;
 public class WorkerServiceImpl implements WorkerService {
 
     private WorkerRepository workerRepository;
-
-    public WorkerServiceImpl (WorkerRepository workerRepository) {
+    private StoreServiceImpl storeService;
+    public WorkerServiceImpl (WorkerRepository workerRepository, StoreServiceImpl storeService) {
         this.workerRepository = workerRepository;
+        this.storeService = storeService;
     }
 
     @Override
@@ -45,5 +48,22 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public void delete(Worker worker) {
         workerRepository.delete(worker);
+    }
+
+    @Override
+    public List<WorkerInfoDto> getWorkerDetails(Long storeId) {
+        List<WorkerInfoDto> list = new ArrayList<>();
+        Store store = storeService.findById(storeId);
+        for (Worker worker : store.getWorkerList()) {
+            WorkerInfoDto workerInfoDto = new WorkerInfoDto();
+            workerInfoDto.setFirstName(worker.getFirstName());
+            workerInfoDto.setLastName(worker.getLastName());
+            workerInfoDto.setHomeAddress(worker.getHomeAddress());
+            workerInfoDto.setEmail(worker.getEmail());
+            workerInfoDto.setPositionName(worker.getPosition().getPositionName());
+            workerInfoDto.setSalary(worker.getPosition().getSalary());
+            list.add(workerInfoDto);
+        }
+        return list;
     }
 }
