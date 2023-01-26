@@ -1,5 +1,6 @@
 package com.example.storemanager.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -12,6 +13,15 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 public class AppConfig {
+
+    @Value("${storemanager.db.url}")
+    private String dbUrl;
+
+    @Value("${storemanager.db.username}")
+    private String dbUsername;
+
+    @Value("${storemanager.db.password}")
+    private String dbPassword;
 
     @Bean(name = "entityManagerFactory")
     public LocalSessionFactoryBean sessionFactoryBean() {
@@ -28,9 +38,9 @@ public class AppConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/storemanager_schema?useSSL=false");
-        dataSource.setUsername("storemanager");
-        dataSource.setPassword("root");
+        dataSource.setUrl(dbUrl);
+        dataSource.setUsername(dbUsername);
+        dataSource.setPassword(dbPassword);
         return dataSource;
     }
 
