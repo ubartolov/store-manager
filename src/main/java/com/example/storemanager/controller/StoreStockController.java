@@ -1,7 +1,10 @@
 package com.example.storemanager.controller;
 
 import com.example.storemanager.dao.StoreStockRepository;
+import com.example.storemanager.dto.DeleteProductDto;
 import com.example.storemanager.dto.RequestProductDto;
+import com.example.storemanager.dto.RequestProductWarehouseDto;
+import com.example.storemanager.dto.UpdateProductDto;
 import com.example.storemanager.model.StoreStock;
 import com.example.storemanager.service.impl.ProductServiceImpl;
 import com.example.storemanager.service.impl.StoreServiceImpl;
@@ -44,7 +47,7 @@ public class StoreStockController {
     }
 
     @RequestMapping(path = "/store/requestproduct/{storeId}")
-    public String getWarehouseInfo(@PathVariable(name = "storeId")Long storeId, Model model) {
+    public String requestNewProductToStore(@PathVariable(name = "storeId")Long storeId, Model model) {
         model.addAttribute("productInfo", productServiceImpl.findByProductNotIn(storeId));
         model.addAttribute("storeStock", storeStockServiceImpl.getDetailsById(storeId));
         model.addAttribute("warehouses", storeServiceImpl.findAllWarehouses());
@@ -55,6 +58,29 @@ public class StoreStockController {
     @RequestMapping(path = "/storestock/store-new-product", method = RequestMethod.POST)
     public ResponseEntity<?> addNewProductToStore(@RequestBody List<RequestProductDto> requestProductDtoList) {
         storeStockServiceImpl.addNewProductToStoreList(requestProductDtoList);
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+
+    @RequestMapping(path = "/storestock/update-warehouse-stock", method = RequestMethod.PATCH)
+    public ResponseEntity<?> updateProductInWarehouse(@RequestBody UpdateProductDto updateProductDto) {
+        storeStockServiceImpl.updateProductQuantity(updateProductDto);
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+
+    @RequestMapping(path = "/warehouse/addnewproduct/{warehouseId}")
+    public String getWarehouseInfo(@PathVariable(name = "warehouseId")Long warehouseId, Model model) {
+        model.addAttribute("warehouseId", warehouseId);
+        return "warehouse/addnewproduct";
+    }
+
+    @RequestMapping(path = "/storestock/warehouse-new-product", method = RequestMethod.POST)
+    public ResponseEntity<?> addNewProductToWarehouse(@RequestBody List<RequestProductWarehouseDto> warehouseDtoList) {
+        storeStockServiceImpl.addNewProductToWarehouseList(warehouseDtoList);
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+    @RequestMapping(path = "/storestock/delete-product-store", method = RequestMethod.PATCH)
+    public ResponseEntity<?> deleteProductFromStore(@RequestBody DeleteProductDto deleteProductDto) {
+        storeStockServiceImpl.deleteProductFromStoreStock(deleteProductDto);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 }
