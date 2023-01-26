@@ -29,7 +29,7 @@ public class AppConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/storemanager_schema?useSSL=false");
-        dataSource.setUsername("root");
+        dataSource.setUsername("storemanager");
         dataSource.setPassword("root");
         return dataSource;
     }
