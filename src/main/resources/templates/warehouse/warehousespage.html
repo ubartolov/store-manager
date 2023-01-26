@@ -2,41 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>
-        Warehouse
+        Main Page
     </title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" th:href="@{/css/storespage.css}">
+    <link rel="stylesheet" th:href="@{/css/mainpage.css}">
 </head>
 <body>
 
-<div class="container-fluid" id="title-container">
-    <div class="row">
-        <div class="col">
-            <h3>ALL WAREHOUSE LOCATIONS</h3>
-        </div>
-    </div>
-</div>
-<br>
-<div class="container" id="card-container">
-    <div class="row">
-        <div class="col-sm-4" th:if="${not #lists.isEmpty(warehouses)}" th:each="warehouse: ${warehouses}">
-            <div class="card" style="max-width: 100%; max-height: 100%; margin-top: 3px; margin-bottom: 3px;" id="card-id">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${warehouse.address}"></h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Store Address</h6>
 
-                    <a th:href="${'/warehouse/warehousedetails/' + warehouse.storeId}" class="card-link">Details</a>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
