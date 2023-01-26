@@ -2,6 +2,18 @@ $(document).ready(
 
     function() {
 
+    
+        $('.navbar-brand').append('Warehouse Information');
+        $('.navbar-text').css('visibility', 'visible')
+        $('.reference-button').append('Request New Product');
+
+        $('.reference-button').click(function() {
+            var warehouseId = $('#warehouseIdInput').val();
+            var referanceButton = this;
+            var link = '/warehouse/addnewproduct/' + warehouseId; 
+            referanceButton.href = link;
+        })
+
         $(".dropdownMenuLink").click(function() {
             var submitButton = $('.submit-button');
             submitButton.prop('disabled', true);
@@ -43,8 +55,9 @@ $(document).ready(
                 cache: false,
                 timeout: 60000,
                 success: function(data) {
-                    alert("Successfully added " + +requestAmount + " more copies of " + productName);
-                    location.reload(true);
+                    var headerText = 'Successfully added more units of';
+                    var bodyText = productName;
+                    drawModal(headerText, bodyText, '/warehouse/warehousedetails/' + warehouseId);
                 },
                 error: function(e) {
                     var response = JSON.parse(e.responseText);
@@ -52,5 +65,43 @@ $(document).ready(
                 }
             })
         })
+
+        $('.delete-button').on('click', function() {
+            var deleteButton = this;
+            var productId = $(deleteButton).parent('.button-td').siblings('.td-dropdown').children('.dropdown-menu').children('#request-form')
+                            .children('.insert-div').children('.productIdInput').val();
+            var warehouseId = $('#warehouseIdInput').val();
+            var productName = $(deleteButton).parent('.button-td').siblings('.td-dropdown').children('.dropdown-menu').children('#request-form')
+            .children('.insert-div').children('.productNameInput').val();
+
+            var body = {};
+            body["storeId"] = +warehouseId;
+            body["productId"] = +productId;
+
+            var bodyAsJson = JSON.stringify(body);
+
+            $.ajax({
+                type:'PATCH',
+                contentType: 'application/json',
+                url: "/storestock/delete-product-warehouse",
+                data: bodyAsJson,
+                dataType: 'json',
+                cache: false,
+                timeout: 60000,
+                success: function(data) {
+                    var headerText = 'Successfully deleted';
+                    var bodyText = productName;
+                    drawModal(headerText, bodyText, '/warehouse/warehousedetails/' + warehouseId);
+                    
+                },
+                error: function(e) {
+                    var response = JSON.parse(e.responseText);
+                    alert(response.prettyErrorMessage);
+                }
+            });
+
+        });
+        
+        $('#main-table').DataTable();
     }
-)
+);

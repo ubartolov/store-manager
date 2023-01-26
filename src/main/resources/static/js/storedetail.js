@@ -1,13 +1,40 @@
 $(document).ready(
 
     function () {
-        $(".dropdownMenuLink").click(function() {
+
+        $('.navbar-brand').append('Store Information');
+        $('.navbar-text').css('visibility', 'visible')
+        $('.reference-button').append('Request New Product');
+
+        $('.reference-button').click(function() {
+            var storeId = $('#storeIdInput').val();
+            var referanceButton = this;
+            var link = '/store/requestproduct/' + storeId; 
+            referanceButton.href = link;
+        })
+        
+        
+
+
+        $(".dropdownMenuLink").click(function () {
             var submitButton = $('.submit-button');
             var insertAmount = $('.request-amount');
+            var quantityText = $('.quantity-text');
+
             submitButton.prop('disabled', true);
             insertAmount.prop('disabled', true);
-            
-       });
+            quantityText.text('');
+
+            $('.request-form').trigger("reset");
+        });
+        $('.return-dropdown-menu').click(function () {
+            var returnButton = $('.submit-return-button');
+            returnButton.prop('disabled', true);
+
+            $('.return-form').trigger("reset");
+        });
+
+
 
         $('.warehouse-select').on('change', function () {
             var warehouseSelect = this;
@@ -22,51 +49,57 @@ $(document).ready(
             $.ajax({
                 type: "GET",
                 contentType: "application/json",
-                url: path ,
+                url: path,
                 dataType: 'json',
                 cache: false,
                 timeout: 600000,
                 success: function (data) {
-    
-                    var quantityDiv = $(warehouseSelect).siblings('.quantity-div');
-                    var quantityLabel = quantityDiv.children('.quantity-label');
 
-                    quantityLabel.append(data);
-                    quantityDiv.css('visibility', 'visible');
+                    var quantityDiv = $(warehouseSelect).siblings('.quantity-div');
+                    var quantityText = quantityDiv.children('.quantity-text');
+
+                    if ($(quantityText).is(':empty')) {
+                        quantityText.append(data);
+                        quantityDiv.css('visibility', 'visible');
+                    } else {
+                        quantityText.text('');
+                        quantityText.append(data);
+                        quantityDiv.css('visibility', 'visible');
+                    }
 
                     var inStorage = quantityDiv.children('.currently-in-storage');
                     inStorage.val(data)
-                    
+
 
                 },
                 error: function (e) {
                     console.log("ERROR : ", e);
-                    
+
                 }
 
 
             });
         });
 
-        $('.request-amount').on('input', function() {
+        $('.request-amount').on('input', function () {
             var requestAmount = this;
             var sumbitButton = $(requestAmount).parent().siblings('.submit-button');
             var quantity = $(requestAmount).val();
-        
-            var currentlyInStorage = $(requestAmount).parent().siblings('.quantity-div').children('.currently-in-storage');
-            
 
-            if(+quantity > +$(currentlyInStorage).val() || +quantity <= 0) {
+            var currentlyInStorage = $(requestAmount).parent().siblings('.quantity-div').children('.currently-in-storage');
+
+
+            if (+quantity > +$(currentlyInStorage).val() || +quantity <= 0) {
                 requestAmount.style.border = '3px solid #FF0000';
                 sumbitButton.prop('disabled', true);
-            } else if(+quantity <= +$(currentlyInStorage).val()){
+            } else if (+quantity <= +$(currentlyInStorage).val()) {
                 requestAmount.style.border = '3px solid #0000FF';
                 sumbitButton.prop('disabled', false);
             }
 
-         })
+        })
 
-         $('.submit-button').on('click', function () {
+        $('.submit-button').on('click', function () {
             var buttonId = this;
             var storeId = $(buttonId).siblings('.storeIdInput').val();
 
@@ -82,69 +115,90 @@ $(document).ready(
             body['productId'] = +productId;
             body['requestAmount'] = +requestAmount;
 
+            console.log(body);
+
             var bodyAsJson = JSON.stringify(body);
 
             $.ajax({
-                type:'PATCH',
+                type: 'PATCH',
                 contentType: 'application/json',
                 url: "/storestock/reallocate-stock",
                 data: bodyAsJson,
                 dataType: 'json',
                 cache: false,
                 timeout: 60000,
-                success: function(data) {
-                    if(+requestAmount > 1) {
-                        alert("Successfully added " + +requestAmount + " more copies of " + productName);
-                    }else {
-                        alert("Successfully added " + +requestAmount + " more copy of " + productName);
-                    }
-                    location.reload(true);
+                success: function (data) {
+                    var headerText = "Successfully added more units of"
+                    var bodyText = productName;
+                    drawModal(headerText, bodyText, '/store/storedetails/' + storeId);
                 },
-                error: function(e) {
+                error: function (e) {
                     var response = JSON.parse(e.responseText);
                     alert(response.prettyErrorMessage);
                 }
             })
 
-         })
+        })
 
-         $('.delete-button').on('click', function() {
-            var deleteButton = this;
-            var productId = $(deleteButton).parent('.button-td').siblings('.td-dropdown').children('.dropdown-menu').children('#request-form')
-                            .children('.div-list-dropdown').children('.productIdInput').val();
-            var storeId = $('#storeIdInput').val();
-            var productName = $(deleteButton).parent('.button-td').siblings('.td-dropdown').children('.dropdown-menu').children('#request-form')
-            .children('.div-list-dropdown').children('.productNameInput').val();
+        $('.return-amount').on('input', function () {
+            var returnAmount = this;
+            var sumbitButton = $(returnAmount).parent().siblings('.submit-return-button');
+            var quantity = $(returnAmount).val();
+            var currentlyInStore = $(returnAmount).parent().siblings('.quantityInput').val();
 
-            console.log(productId);
-            console.log(storeId);
-            console.log(productName);
+            console.log(currentlyInStore);
+
+
+
+
+            if (+quantity <= 0 || +quantity > +currentlyInStore) {
+                returnAmount.style.border = '3px solid #FF0000';
+                sumbitButton.prop('disabled', true);
+            } else if (+quantity > 0 || +quantity <= +currentlyInStore) {
+                returnAmount.style.border = '3px solid #0000FF';
+                sumbitButton.prop('disabled', false);
+            }
+
+        })
+
+        $('.submit-return-button').on('click', function () {
+            var returnButton = this;
+            var productId = $(returnButton).siblings('.productIdInput').val();
+            var storeId = $(returnButton).siblings('.storeIdInput').val();
+            var productName = $(returnButton).siblings('.productNameInput').val();
+            var warehouseSelect = $(returnButton).siblings('.return-warehouse-select');
+            var warehouseId = warehouseSelect.val();
+            var returnAmount = $(returnButton).siblings(".insert-return-div").children(".return-amount").val();
 
             var body = {};
             body["storeId"] = +storeId;
             body["productId"] = +productId;
-
-            var bodyAsJson = JSON.stringify(body);
-            
+            body["warehouseId"] = +warehouseId;
+            body["requestAmount"] = +returnAmount;
             console.log(body);
 
+            var bodyAsJson = JSON.stringify(body);
+
             $.ajax({
-                type:'PATCH',
+                type: 'PATCH',
                 contentType: 'application/json',
-                url: "/storestock/delete-product-store",
+                url: "/storestock/return-product-store",
                 data: bodyAsJson,
                 dataType: 'json',
                 cache: false,
                 timeout: 60000,
-                success: function(data) {
-                    alert('Successfully deleted ' + productName);
-                    location.reload(true);
+                success: function (data) {
+                    var headerText = "Successfully returned a product to warehouse"
+                    var bodyText = productName;
+                    drawModal(headerText, bodyText, '/store/storedetails/' + storeId);
                 },
-                error: function(e) {
+                error: function (e) {
                     var response = JSON.parse(e.responseText);
                     alert(response.prettyErrorMessage);
                 }
             })
-         })
+        });
+        
+        $('#main-table').DataTable();
     }
 );

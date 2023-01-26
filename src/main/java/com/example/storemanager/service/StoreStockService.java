@@ -21,15 +21,19 @@ public interface StoreStockService {
 
     void deleteProductFromStoreStock(DeleteProductDto deleteProductDto);
 
+    void returnProductToWarehouse(DeleteProductDto deleteProductDto);
+
     StoreStock getStockForWarehouseAndProduct(Long warehouseId, Long productId);
 
-    void addNewProductToStoreList(List<RequestProductDto> requestProductDtoList);
+    List<RequestProductDto> addNewProductToStoreList(List<RequestProductDto> requestProductDtoList);
 
-    void addNewProductToWarehouseList(List<RequestProductWarehouseDto> warehouseDtoList);
+    List<RequestProductWarehouseDto> addNewProductToWarehouseList(List<RequestProductWarehouseDto> warehouseDtoList);
 
-    void addAndSubtractQuantity(RequestProductDto requestProductDto);
+    void addQuantityFromWarehouse(RequestProductDto requestProductDto);
 
-    void addNewProductToStore(RequestProductDto requestProductDto);
+    void returnProductToWarehouse(RequestProductDto requestProductDto);
+
+    RequestProductDto addNewProductToStore(RequestProductDto requestProductDto);
 
     void addNewProductToWarehouse(RequestProductWarehouseDto warehouseDto);
 
