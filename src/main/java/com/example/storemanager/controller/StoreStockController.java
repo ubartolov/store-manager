@@ -42,7 +42,7 @@ public class StoreStockController {
     @RequestMapping(path = "/storestock/reallocate-stock", method = RequestMethod.PATCH)
     @ResponseBody
     public ResponseEntity<?> addProductToStore(@RequestBody RequestProductDto requestProductDto) {
-        storeStockServiceImpl.addAndSubtractQuantity(requestProductDto);
+        storeStockServiceImpl.addQuantityFromWarehouse(requestProductDto);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
@@ -57,8 +57,8 @@ public class StoreStockController {
 
     @RequestMapping(path = "/storestock/store-new-product", method = RequestMethod.POST)
     public ResponseEntity<?> addNewProductToStore(@RequestBody List<RequestProductDto> requestProductDtoList) {
-        storeStockServiceImpl.addNewProductToStoreList(requestProductDtoList);
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        List<RequestProductDto> result = storeStockServiceImpl.addNewProductToStoreList(requestProductDtoList);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @RequestMapping(path = "/storestock/update-warehouse-stock", method = RequestMethod.PATCH)
@@ -75,12 +75,18 @@ public class StoreStockController {
 
     @RequestMapping(path = "/storestock/warehouse-new-product", method = RequestMethod.POST)
     public ResponseEntity<?> addNewProductToWarehouse(@RequestBody List<RequestProductWarehouseDto> warehouseDtoList) {
-        storeStockServiceImpl.addNewProductToWarehouseList(warehouseDtoList);
+        List<RequestProductWarehouseDto> result = storeStockServiceImpl.addNewProductToWarehouseList(warehouseDtoList);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+    @RequestMapping(path = "/storestock/delete-product-warehouse", method = RequestMethod.PATCH)
+    public ResponseEntity<?> deleteProductFromWarehouse(@RequestBody DeleteProductDto deleteProductDto) {
+        storeStockServiceImpl.deleteProductFromStoreStock(deleteProductDto);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
-    @RequestMapping(path = "/storestock/delete-product-store", method = RequestMethod.PATCH)
-    public ResponseEntity<?> deleteProductFromStore(@RequestBody DeleteProductDto deleteProductDto) {
-        storeStockServiceImpl.deleteProductFromStoreStock(deleteProductDto);
+
+    @RequestMapping(path = "/storestock/return-product-store", method = RequestMethod.PATCH)
+    public ResponseEntity<?> returnProductFromStore(@RequestBody RequestProductDto requestProductDto) {
+        storeStockServiceImpl.returnProductToWarehouse(requestProductDto);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 }

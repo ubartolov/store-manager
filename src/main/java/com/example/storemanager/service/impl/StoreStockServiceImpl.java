@@ -82,6 +82,13 @@ public class StoreStockServiceImpl implements StoreStockService {
         delete(existingStoreStock);
     }
 
+    @Override
+    public void returnProductToWarehouse(DeleteProductDto deleteProductDto) {
+        Store store = storeService.findById(deleteProductDto.getStoreId());
+        Product product = productService.findById(deleteProductDto.getProductId());
+
+    }
+
 
     @Override
     public StoreStock getStockForWarehouseAndProduct(Long warehouseId, Long productId) {
@@ -102,21 +109,27 @@ public class StoreStockServiceImpl implements StoreStockService {
     }
 
     @Override
-    public void addNewProductToStoreList(List<RequestProductDto> requestProductDtoList) {
+    public List<RequestProductDto> addNewProductToStoreList(List<RequestProductDto> requestProductDtoList) {
+        List<RequestProductDto> list = new ArrayList<>();
         for (RequestProductDto requestProductDto : requestProductDtoList) {
-            addNewProductToStore(requestProductDto);
+            RequestProductDto updatedDto = addNewProductToStore(requestProductDto);
+            list.add(updatedDto);
         }
+        return list;
     }
 
     @Override
-    public void addNewProductToWarehouseList(List<RequestProductWarehouseDto> warehouseDtoList) {
+    public List<RequestProductWarehouseDto> addNewProductToWarehouseList(List<RequestProductWarehouseDto> warehouseDtoList) {
+        List<RequestProductWarehouseDto> list = new ArrayList<>();
         for (RequestProductWarehouseDto requestProductWarehouseDto : warehouseDtoList) {
             addNewProductToWarehouse(requestProductWarehouseDto);
+            list.add(requestProductWarehouseDto);
         }
+        return list;
     }
 
     @Override
-    public void addAndSubtractQuantity(RequestProductDto requestProductDto) {
+    public void addQuantityFromWarehouse(RequestProductDto requestProductDto) {
         Store store = storeService.findById(requestProductDto.getStoreId());
         Store warehouse = storeService.findById(requestProductDto.getWarehouseId());
         Product product = productService.findById(requestProductDto.getProductId());
@@ -138,12 +151,38 @@ public class StoreStockServiceImpl implements StoreStockService {
         existingWarehouseStock.setQuantity(existingWarehouseStock.getQuantity() - requestProductDto.getRequestAmount());
         storeStockRepository.save(existingWarehouseStock);
     }
-
     @Override
-    public void addNewProductToStore(RequestProductDto requestProductDto) {
+    public void returnProductToWarehouse(RequestProductDto requestProductDto) {
         Store store = storeService.findById(requestProductDto.getStoreId());
         Store warehouse = storeService.findById(requestProductDto.getWarehouseId());
         Product product = productService.findById(requestProductDto.getProductId());
+        validationService.validateInsertAmount(requestProductDto.getRequestAmount());
+
+        StoreStock existingStoreStock = findByStoreAndProduct(store, product);
+        StoreStock existingWarehouseStock = findByStoreAndProduct(warehouse, product);
+
+        if (existingStoreStock == null) {
+            return;
+        }
+        if (existingWarehouseStock == null) {
+            return;
+        }
+
+        existingStoreStock.setQuantity(existingStoreStock.getQuantity() - requestProductDto.getRequestAmount());
+        storeStockRepository.save(existingStoreStock);
+
+        existingWarehouseStock.setQuantity(existingWarehouseStock.getQuantity() + requestProductDto.getRequestAmount());
+        storeStockRepository.save(existingWarehouseStock);
+    }
+
+    @Override
+    public RequestProductDto addNewProductToStore(RequestProductDto requestProductDto) {
+        Store store = storeService.findById(requestProductDto.getStoreId());
+        Store warehouse = storeService.findById(requestProductDto.getWarehouseId());
+        Product product = productService.findById(requestProductDto.getProductId());
+
+        requestProductDto.setProductName(product.getProductName());
+        requestProductDto.setProductPrice(product.getProductPrice());
         validationService.validateInsertAmount(requestProductDto.getRequestAmount());
 
         Optional<StoreStock> existingStoreStock = storeStockRepository.findByStoreAndProduct(store, product);
@@ -165,6 +204,7 @@ public class StoreStockServiceImpl implements StoreStockService {
         existingWarehouseStock.setQuantity(existingWarehouseStock.getQuantity() - requestProductDto.getRequestAmount());
         storeStockRepository.save(existingWarehouseStock);
 
+        return requestProductDto;
     }
 
     @Override

@@ -9,4 +9,6 @@ public class RequestProductDto {
     private Long storeId;
     private Long productId;
     private Integer requestAmount;
+    private String productName;
+    private Integer productPrice;
 }

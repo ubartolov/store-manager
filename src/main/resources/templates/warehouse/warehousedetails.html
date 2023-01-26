@@ -6,47 +6,57 @@
     </title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
     <link rel="stylesheet" th:href="@{/css/storedetails.css}">
 </head>
 <body>
 
-<script
-        src="https://code.jquery.com/jquery-3.6.2.js"
+<script src="https://code.jquery.com/jquery-3.6.2.js"
         integrity="sha256-pkn2CUZmheSeyssYw3vMp1+xyub4m+e+QK4sQskvuo4="
         crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
         crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 <script type="text/javascript" th:src="@{/js/warehousedetail.js}"></script>
 
+<input type="hidden" th:value="${warehouseId}" id="warehouseIdInput">
+
+<div th:replace="fragments/nav_menu.html :: nav-menu-fragment"></div>
+<br>
 <div class="container">
     <div th:if="${not #lists.isEmpty(storeStock)}">
-        <table class="table table-striped">
+        <table class="table table-striped table-sm" id="main-table" style="width: 100%;">
+            <thead>
             <tr>
                 <th>Product Name</th>
                 <th>Quantity</th>
                 <th>Price</th>
-                <th></th>
+                <th>Add Product</th>
+                <th>Remove Product</th>
 
             </tr>
+            </thead>
+            <tbody>
             <tr class="table-row-id" th:each="warehouse: ${storeStock}">
                 <td th:text="${warehouse.productName}"></td>
                 <td th:text="${warehouse.quantity}"></td>
                 <td th:text="${warehouse.productPrice}"></td>
-                <td class="dropdown show">
-                    <a class="btn btn-secondary dropdown-toggle dropdownMenuLink" href="#" role="button"
+                <td class="dropdown show td-dropdown">
+                    <a class="btn btn-secondary dropdown-toggle dropdownMenuLink" href="#" type="button"
                        id="dropdownMenuLink"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Add More
                     </a>
 
                     <div id="add-product-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <form class="form-horizontal" id="request-form">
+                        <form class="form-horizontal request-form">
                             <div class="px-4 py-3 insert-div">
                                 <input type="hidden" th:value="${warehouse.storeId}" class="warehouseIdInput">
                                 <input type="hidden" th:value="${warehouse.productId}" class="productIdInput">
@@ -55,14 +65,24 @@
                                     <label>Insert Amount</label>
                                     <input type="number" class="form-control request-amount">
                                 </div>
+                                <br>
                                 <button type="button" class="btn btn-primary submit-button">Request</button>
                             </div>
                         </form>
                     </div>
                 </td>
+                <td class="button-td">
+                    <button type="button" class="btn btn-danger delete-button">Delete</button>
+                </td>
             </tr>
+            </tbody>
+            <tfoot></tfoot>
         </table>
-        <a class="btn btn-primary" th:href="${'/warehouse/addnewproduct/' + warehouseId}">Request New Product</a>
+        <br>
+<!--        <a class="btn btn-primary" th:href="${'/warehouse/addnewproduct/' + warehouseId}">Request New Product</a>-->
+
+        <div th:replace="fragments/popup_modal.html :: modal_fragment"></div>
+
     </div>
 </div>
 
