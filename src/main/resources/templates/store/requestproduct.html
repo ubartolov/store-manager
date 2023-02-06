@@ -25,12 +25,12 @@
 <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript" th:src="@{/js/common/common.js}"></script>
-<script type="text/javascript" th:src="@{/js/requestproduct.js}"></script>
+<script type="text/javascript" th:src="@{/js/store/requestproduct.js}"></script>
 
 
 <input type="hidden" th:value="${storeId}" id="storeIdInput">
 
-<div th:replace="fragments/nav_menu.html :: nav-menu-fragment"></div>
+<div th:insert="fragments/nav_menu.html :: nav-menu-fragment"></div>
 <br>
 <div class="container">
     <div th:if="${not #lists.isEmpty(productInfo)}">
@@ -103,7 +103,7 @@
 
         <button type="button" class="btn btn-primary request-button">Add to Store</button>
 
-        <div th:replace="fragments/popup_modal.html :: modal_fragment"></div>
+        <div th:insert="fragments/popup_modal.html :: modal_fragment"></div>
 
     </div>
 </div>

@@ -3,7 +3,7 @@ $(document).ready(
     function () {
 
         $('.navbar-brand').append('Store Information');
-        $('.navbar-text').css('visibility', 'visible')
+        $('.navbar-text').css('visibility', 'visible');
         $('.reference-button').append('Request New Product');
 
         $('.reference-button').click(function() {
@@ -198,7 +198,7 @@ $(document).ready(
                 }
             })
         });
-        
+        $('#worker-table').DataTable();
         $('#main-table').DataTable();
     }
 );

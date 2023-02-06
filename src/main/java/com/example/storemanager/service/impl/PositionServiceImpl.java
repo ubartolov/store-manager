@@ -24,6 +24,14 @@ public class PositionServiceImpl implements PositionService {
         positionRepository.findAll().forEach(positionList::add);
         return positionList;
     }
+    @Override
+    public Position findById(Long id) {
+        Optional<Position> optionalPosition = positionRepository.findById(id);
+        if (optionalPosition.isPresent()) {
+            return optionalPosition.get();
+        }
+        return null;
+    }
 
     @Override
     public Position saveOrUpdate(Position position) {

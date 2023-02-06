@@ -2,6 +2,7 @@ package com.example.storemanager.service.impl;
 
 import com.example.storemanager.constants.StoreType;
 import com.example.storemanager.dao.StoreRepository;
+import com.example.storemanager.dao.WorkerRepository;
 import com.example.storemanager.model.Store;
 import com.example.storemanager.service.StoreService;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,13 @@ import java.util.Optional;
 public class StoreServiceImpl implements StoreService {
 
     private StoreRepository storeRepository;
+    private final WorkerRepository workerRepository;
 
-    public StoreServiceImpl(StoreRepository storeRepository) {
+
+    public StoreServiceImpl(StoreRepository storeRepository,
+                            WorkerRepository workerRepository) {
         this.storeRepository = storeRepository;
+        this.workerRepository = workerRepository;
     }
 
     @Override
@@ -54,6 +59,7 @@ public class StoreServiceImpl implements StoreService {
         }
         return null;
     }
+
 
     @Override
     public List<Store> findAllStores() {

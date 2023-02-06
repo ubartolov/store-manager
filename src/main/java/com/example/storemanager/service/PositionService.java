@@ -11,6 +11,8 @@ public interface PositionService {
 
     List<Position> findAll();
 
+    Position findById(Long id);
+
     Position saveOrUpdate(Position position);
 
     void delete(Position position);

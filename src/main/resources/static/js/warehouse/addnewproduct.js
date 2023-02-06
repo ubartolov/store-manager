@@ -15,7 +15,7 @@ $(document).ready(
             if (inputName != null && +inputPrice > 0 && +inputQuantity > 0) {
                 $('.order-button').prop('disabled', false);
             }
-        })
+        });
 
         $('.order-button').on('click', function () {
             var button = this;

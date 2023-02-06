@@ -101,7 +101,7 @@ $(document).ready(
             });
 
         });
-        
+        $('#worker-table').DataTable();
         $('#main-table').DataTable();
     }
 );

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>
+        Request New Product
+    </title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+
+    <link rel="stylesheet" th:href="@{/css/requestproduct.css}">
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.6.2.js"
+        integrity="sha256-pkn2CUZmheSeyssYw3vMp1+xyub4m+e+QK4sQskvuo4="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
+<script type="text/javascript" th:src="@{/js/worker/add-new-worker.js}"></script>
+
+
+<div th:insert="fragments/nav_menu.html :: nav-menu-fragment"></div>
+
+<input type="hidden" th:value="${workerId}" id="workerIdInput">
+
+<div class="dropdown-divider"></div>
+
+<div class="container">
+    <h2>
+        Enter Worker Information
+    </h2>
+    <form class="worker-form">
+        <input type="hidden" id="workerId">
+        <div class="first-alignment-div">
+            <div class="input-group input-group-sm mb-3 first-name-div">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">First Name</span>
+                </div>
+                <input type="text" class="form-control" id="first-name-input"/>
+            </div>
+            <div class="input-group input-group-sm mb-3 last-name-div">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Last Name</span>
+                </div>
+                <input type="text" class="form-control" id="last-name-input"/>
+            </div>
+            <div class="input-group input-group-sm mb-3 email-div">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Email</span>
+                </div>
+                <input type="email" class="form-control" id="email-input"/>
+            </div>
+            <div class="input-group input-group-sm mb-3 address-div">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Home Address</span>
+                </div>
+                <input type="email" class="form-control" id="address-input"/>
+            </div>
+            <div class="input-group input-group-sm mb-3 position-div">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Position</span>
+                </div>
+                <select class="form-select form-select-sm" id="worker-position-select" aria-label=".form-select-sm example">
+                    <div th:each="position: ${positions}" id="positionIdDiv">
+                        <option th:value="${position.positionId}"
+                                th:text="${position.positionName}"></option>
+                    </div>
+                </select>
+            </div>
+            <div class="input-group input-group-sm mb-3 store-div">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Store/Warehouse</span>
+                </div>
+                <select class="form-select form-select-sm" id="worker-store-select" aria-label=".form-select-sm example">
+                    <div th:each="store: ${stores}" id="storeIdDiv">
+                        <option th:value="${store.storeId}"
+                                th:text="${store.address}"></option>
+                    </div>
+                </select>
+            </div>
+            <button type="button" class="btn btn-success submit-button">Submit</button>
+        </div>
+    </form>
+    <div th:insert="fragments/popup_modal.html :: modal_fragment"></div>
+</div>
+
+</body>
+</html>

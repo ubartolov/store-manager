@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class WorkerInfoDto {
 
+    private Long workerId;
     private String firstName;
     private String lastName;
     private String email;
@@ -12,5 +13,7 @@ public class WorkerInfoDto {
     private String positionName;
     private Integer salary;
     private Long storeId;
+    private String storeAddress;
+    private Long positionId;
 
 }
