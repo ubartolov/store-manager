@@ -1,5 +1,7 @@
 package com.example.storemanager.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "POSITION")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Position {
 
     @Id
@@ -19,6 +22,7 @@ public class Position {
     private String positionName;
     @Column(name = "salary")
     private Integer salary;
+
     @OneToMany(mappedBy = "position")
     private List<Worker> workers = new ArrayList<>();
 

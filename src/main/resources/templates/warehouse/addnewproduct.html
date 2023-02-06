@@ -24,12 +24,12 @@
         crossorigin="anonymous"></script>
 <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" th:src="@{/js/common/common.js}"></script>
-<script type="text/javascript" th:src="@{/js/addnewproduct.js}"></script>
+<script type="text/javascript" th:src="@{/js/warehouse/addnewproduct.js}"></script>
 
 
 <input type="hidden" th:value="${warehouseId}" id="warehouseIdInput">
 
-<div th:replace="fragments/nav_menu.html :: nav-menu-fragment"></div>
+<div th:insert="fragments/nav_menu.html :: nav-menu-fragment"></div>
 
 <h2>
     Enter Product Information
@@ -72,7 +72,7 @@
         </div>
     </form>
 
-    <div th:replace="fragments/popup_modal.html :: modal_fragment"></div>
+    <div th:insert="fragments/popup_modal.html :: modal_fragment"></div>
 
 </div>
 

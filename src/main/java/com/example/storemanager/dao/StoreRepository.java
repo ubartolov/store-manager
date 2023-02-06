@@ -2,6 +2,7 @@ package com.example.storemanager.dao;
 
 import com.example.storemanager.constants.StoreType;
 import com.example.storemanager.model.Store;
+import com.example.storemanager.model.Worker;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

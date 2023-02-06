@@ -1,6 +1,8 @@
 package com.example.storemanager.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "WORKER")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Worker {
 
     @Id
@@ -19,6 +22,7 @@ public class Worker {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+
     @Column(name = "email")
     private String email;
     @Column(name = "home_address")
@@ -29,7 +33,6 @@ public class Worker {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
-    @JsonBackReference
     private Store store;
 
 }

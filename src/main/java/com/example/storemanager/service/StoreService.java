@@ -10,11 +10,13 @@ public interface StoreService {
 
     List<Store> findAll();
 
+
     Store saveOrUpdate(Store store);
 
     void delete(Store store);
 
     Store findById(Long id);
+
 
     List<Store> findAllStores();
 
