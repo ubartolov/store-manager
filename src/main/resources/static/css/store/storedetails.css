@@ -1,0 +1,14 @@
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.main-table {
+    width: 100%;
+}
+.products-button {
+    width: 48%;
+}
+
+.staff-button {
+    width: 48%;
+}

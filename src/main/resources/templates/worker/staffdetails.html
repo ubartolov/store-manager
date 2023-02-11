@@ -32,7 +32,7 @@
 <br>
 <div class="container">
     <div th:if="${not #lists.isEmpty(workers)}" class="table-responsive">
-        <table class="table table-striped table-sm" id="main-table" style="width: 100%;">
+        <table class="table table-striped table-sm" id="main-table">
             <thead>
             <tr>
                 <th>First Name</th>
@@ -55,10 +55,10 @@
                 <td th:text="${worker.positionName}"></td>
                 <td th:text="${worker.salary}"></td>
                 <td th:text="${worker.storeAddress}"></td>
-                <td><a claas="button btn-secondary" type="button"
+                <td><a class="btn btn-info" type="button"
                        th:href="${'/worker/add-new-worker/' + worker.workerId}">Edit</a></td>
                 <td class="dropdown show transfer-dropdown">
-                    <a class="btn btn-secondary dropdown-toggle dropdownMenuLink" href="#" type="button"
+                    <a class="btn btn-success dropdown-toggle dropdownMenuLink" href="#" type="button"
                        id="dropdownMenuLink"
                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Transfer
@@ -78,7 +78,7 @@
                                     </div>
                                 </select>
                             </div>
-                            <button type="button" class="btn btn-primary request-button">Request</button>
+                            <button type="button" class="btn btn-success request-button">Request</button>
                         </form>
                     </div>
                 </td>

@@ -1,5 +1,6 @@
 package com.example.storemanager.service;
 
+import com.example.storemanager.dto.StoreDto;
 import com.example.storemanager.model.Store;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,16 @@ public interface StoreService {
 
     Store saveOrUpdate(Store store);
 
+    void addOrUpdateStore (StoreDto storeDto);
+
     void delete(Store store);
 
     Store findById(Long id);
 
+
+    StoreDto findByIdDto(Long id);
+
+    StoreDto copyStoreToStoreDto(Store store);
 
     List<Store> findAllStores();
 

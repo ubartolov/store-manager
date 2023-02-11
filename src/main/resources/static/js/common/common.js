@@ -3,7 +3,9 @@ function drawModal(headerText, bodyText, redirectTo) {
     $('#addModalLabel').append(headerText);
     $('.modal-body').append(bodyText);
     $('.close-modal-button-add').on('click', function () {
-        window.location = redirectTo;
+        if (redirectTo != null && redirectTo != "") {
+            window.location.href = redirectTo;
+        }
     });
 }
 

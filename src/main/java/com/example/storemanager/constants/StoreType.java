@@ -16,7 +16,7 @@ public enum StoreType {
         this.code = code;
     }
 
-    public StoreType getByCode(String code) {
+    public static StoreType getByCode(String code) {
         for (StoreType type : StoreType.values()) {
             if (type.getCode().equals(code)) {
                 return type;

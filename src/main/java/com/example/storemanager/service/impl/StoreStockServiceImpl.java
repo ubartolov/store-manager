@@ -165,7 +165,10 @@ public class StoreStockServiceImpl implements StoreStockService {
             return;
         }
         if (existingWarehouseStock == null) {
-            return;
+            existingWarehouseStock = new StoreStock();
+            existingWarehouseStock.setProduct(product);
+            existingWarehouseStock.setStore(warehouse);
+            existingWarehouseStock.setQuantity(0);
         }
 
         existingStoreStock.setQuantity(existingStoreStock.getQuantity() - requestProductDto.getRequestAmount());

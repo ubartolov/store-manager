@@ -31,6 +31,9 @@ $(document).ready(
         
         $('.request-button').prop('disabled', true);
         $('.navbar-brand').append('New Worker');
+        $('.navbar-text').css('visibility', "visible");
+        $('.reference-button').css('visibility', "hidden");
+        $('.navbar-text').append("Enter Worker Information");
         
         $('.submit-button').prop('disabled', true);
         $('.finish-button').prop('disabled', true);
@@ -69,8 +72,9 @@ $(document).ready(
             body['homeAddress'] = homeAddress;
             body['positionId'] = +positionId;
             body['storeId'] = +storeId;
-            body['workerId'] = +workerId;
-
+            if (workerId != null && workerId != "") {
+                body['workerId'] = +workerId;
+            }
             var bodyAsJson = JSON.stringify(body);
             console.log(bodyAsJson);
 
