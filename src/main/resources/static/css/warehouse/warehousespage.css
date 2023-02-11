@@ -1,0 +1,18 @@
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+#card-id {
+    background-color: #90EE90;
+    border: 5px solid #32CD32;
+    border-radius: 25px;
+    color: #000000;
+}
+.card {
+    max-width: 70%;
+    max-height: 100%;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+

@@ -1,0 +1,11 @@
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+    background-color: #2F4F4F;
+}
+.container {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5em;
+}
+

@@ -10,7 +10,7 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
 
-    <link rel="stylesheet" th:href="@{/css/requestproduct.css}">
+    <link rel="stylesheet" th:href="@{/css/warehouse/addnewproduct.css}">
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.6.2.js"
@@ -31,14 +31,11 @@
 
 <div th:insert="fragments/nav_menu.html :: nav-menu-fragment"></div>
 
-<h2>
-    Enter Product Information
-</h2>
 <div class="dropdown-divider"></div>
 
 <div class="container">
     <form class="order-form">
-        <div class="first-alignment-div" style="float:left; width:45%; margin: 20px;">
+        <div class="first-alignment-div">
             <div class="input-group input-group-sm mb-3 name-div">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Product Name</span>
@@ -59,8 +56,8 @@
             </div>
             <button type="button" class="btn btn-success order-button">Finish Order</button>
         </div>
-        <div class="second-alignment-div" style="float:right; width:45%; margin: 20px;">
-            <table id="requestListTable" class="table table-striped">
+        <div class="second-alignment-div">
+            <table id="requestListTable" class="table table-striped table-info">
                 <tr>
                     <th>Product Name</th>
                     <th>Quantity</th>

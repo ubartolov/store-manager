@@ -1,53 +1,93 @@
 body {
-    background-color: #003049 !important;
-    font-family: 'Lexend Deca', sans-serif !important;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .vertical-center {
-  min-height: 100%;
-  min-height: 100vh;
+    min-height: 100%;
+    min-height: 100vh;
 
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
-#title-container{
-    background-color: #F77F00 !important;
-    color: #FCBF49 !important;
-    border-bottom: 2px solid #FDC500 !important;
-    /*border-radius: 25px !important;*/
+#title-container {
+    background-color: #2F4F4F !important;
+    color: #32CD32 !important;
+    border-bottom: 2px solid #90EE90 !important;
     text-align: center !important;
 }
 
 #h2-title {
-    color: #050505;
-    font-family: 'Lato', sans-serif;
+    color: #32CD32;
     font-size: 54px;
     font-weight: 300;
     line-height: 58px;
     margin: 10 10 10px;
 }
 
-#store-col{
-    background-color: #F77F00 !important;
-    border: 5px solid #D62828 !important;
-    border-radius: 25px !important;
-    color: #050505 !important;
+.card-body {
+    background-color: #90EE90;
+}
+
+.card {
+    background-color: #32CD32 !important;
+    color: #000000 !important;
+    /* border: 5px solid #2F4F4F;     */
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
 
 }
+
+
+.card:hover {
+    background-color: #2F4F4F !important;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+
+}
+
 a {
     color: #050505 !important;
 }
+a:hover {
+    color: #32CD32 !important;
+}
+/* 
+#warehouse-col {
+    background-color: #90EE90 !important;
+    color: #000000 !important;
+    color: #000000 !important;
+    width: 100px;
+    height: 50px;
+    background: #48e;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+}
 
-#warehouse-col{
-    background-color: #F77F00 !important;
-    border: 5px solid #D62828 !important;
-    border-radius: 25px !important;
-    color: #050505 !important;
+#warehouse-col:hover {
+    background-color: #2F4F4F !important;
+    color: #32CD32 !important;
+    background: #59f;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
-#staff-col{
-    background-color: #F77F00 !important;
-    border: 5px solid #D62828 !important;
-    border-radius: 25px !important;
-    color: #050505 !important;
+
+#staff-col {
+    background-color: #90EE90 !important;
+    color: #000000 !important;
+    color: #000000 !important;
+    color: #000000 !important;
+    width: 100px;
+    height: 50px;
+    background: #48e;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
 }
+
+#staff-col:hover {
+    background-color: #2F4F4F !important;
+    color: #32CD32 !important;
+    background: #59f;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+} */

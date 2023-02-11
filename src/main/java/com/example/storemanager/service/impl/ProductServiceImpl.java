@@ -33,13 +33,20 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findByProductNotIn(Long storeId) {
         Store store = storeService.findById(storeId);
         List<Long> productIdsAlreadyInStore = new ArrayList<>();
+        Optional<List<Product>> optionalProducts;
+
         for (StoreStock storeStock : store.getStoreStock()) {
             productIdsAlreadyInStore.add(storeStock.getProduct().getProductId());
         }
-        Optional<List<Product>> optionalProducts = productRepository.findByProductIdNotIn(productIdsAlreadyInStore);
-        if (optionalProducts.isPresent())
-            return optionalProducts.get();
-        return null;
+        if (productIdsAlreadyInStore.size() > 0) {
+            optionalProducts = productRepository.findByProductIdNotIn(productIdsAlreadyInStore);
+            if (optionalProducts.isPresent())
+                return optionalProducts.get();
+            // TODO throw exception
+            return null;
+        } else {
+            return findAll();
+        }
     }
 
     @Override

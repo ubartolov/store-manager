@@ -1,12 +1,17 @@
 package com.example.storemanager.controller;
 
+import com.example.storemanager.dto.StoreDto;
 import com.example.storemanager.service.impl.StoreServiceImpl;
 import com.example.storemanager.service.impl.StoreStockServiceImpl;
 import com.example.storemanager.service.impl.WorkerServiceImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class WarehouseController {
@@ -35,4 +40,5 @@ public class WarehouseController {
         model.addAttribute("workers", workerService.getWorkerDetailsById(warehouseId));
         return "warehouse/warehousedetails";
     }
+
 }

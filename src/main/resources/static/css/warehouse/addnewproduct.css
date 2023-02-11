@@ -1,0 +1,10 @@
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.first-alignment-div {
+    float:left; width:45%; margin: 20px;
+}
+.second-alignment-div {
+    float:right; width:45%; margin: 20px;
+}

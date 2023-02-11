@@ -6,6 +6,11 @@ $(document).ready(
         $('.request-button').prop('disabled', true);
         $('.navbar-brand').append('New Product');
 
+        $('.navbar-text').css('visibility', "visible");
+        $('.reference-button').css('visibility', "hidden");
+        $('.navbar-text').append("Enter Product Information");
+        
+
         $('.first-alignment-div').on('input', function () {
             var parentDiv = this;
             var inputName = $(parentDiv).children('.name-div').children('.name-input').val();

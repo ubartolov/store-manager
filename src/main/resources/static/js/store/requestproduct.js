@@ -5,6 +5,10 @@ $(document).ready(
     
         $('.request-button').prop('disabled', true);
         $('.navbar-brand').append('Currently Not in Store');
+        
+        $('.navbar-text').css('visibility', "visible");
+        $('.reference-button').css('visibility', "hidden");
+        $('.navbar-text').append("Select Desired Products");
 
         $(".dropdownMenuLink").click(function () {
             var submitButton = $('.submit-button');
@@ -92,7 +96,7 @@ $(document).ready(
                     + '<td  class="productNameData" value="">' + productName + '</td>'
                     + '<td class="requestAmountData">' + requestAmount + '</td>'
                     + '<td>' + warehouseAddress + '</td>'
-                    + '<td><button type="button" class="btn btn-primary remove-button">Remove</button></td>'
+                    + '<td><button type="button" class="btn btn-success remove-button">Remove</button></td>'
                     + '<input type="hidden" class="warehouseIdData" value="' + warehouseId + '">'
                     + '<input type="hidden" class="productIdData" value="' + productId + '">'
                     + '</tr>'
@@ -112,6 +116,7 @@ $(document).ready(
         $('.request-button').on('click', function () {
             var button = this;
             var storeId = $('#storeIdInput').val();
+            var link = $('#link-back').val
             
             var requestList = [];
 
