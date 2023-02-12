@@ -17,9 +17,9 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-<nav th:fragment="nav-menu-fragment" class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav th:fragment="nav-menu-fragment" class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid">
-        <a class="navbar-brand"></a>
+        <a class="navbar-brand" style="color: #3d3d3d"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,21 +27,21 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/">Home</a>
+                    <a class="nav-link" style="color: white;" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #32CD32;" href="/store/storespage">Store</a>
+                    <a class="nav-link" style="color: white;" href="/store/storespage">Store</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #32CD32;" href="/warehouse/warehousespage">Warehouses</a>
+                    <a class="nav-link" style="color: white;" href="/warehouse/warehousespage">Warehouses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #32CD32;" href="/worker/staffdetails">Staff</a>
+                    <a class="nav-link" style="color: white;" href="/worker/staffdetails">Staff</a>
                 </li>
             </ul>
 
             <span class="navbar-text" style="visibility: hidden;">
-                <a class="btn btn-success reference-button" href=""></a>
+                <a class="btn reference-button" style="background-color: #1146f5; color: white;" href=""></a>
             </span>
         </div>
     </div>
