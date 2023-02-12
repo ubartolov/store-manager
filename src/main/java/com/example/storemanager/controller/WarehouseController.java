@@ -1,6 +1,7 @@
 package com.example.storemanager.controller;
 
 import com.example.storemanager.dto.StoreDto;
+import com.example.storemanager.model.Store;
 import com.example.storemanager.service.impl.StoreServiceImpl;
 import com.example.storemanager.service.impl.StoreStockServiceImpl;
 import com.example.storemanager.service.impl.WorkerServiceImpl;
@@ -36,7 +37,9 @@ public class WarehouseController {
     @RequestMapping(path = "warehouse/warehousedetails/{warehouseId}")
     public String getWarehouseDetails(@PathVariable Long warehouseId, Model model) {
         model.addAttribute("storeStock", storeStockService.getDetailsById(warehouseId));
-        model.addAttribute("warehouseId", warehouseId);
+        Store store = storeService.findById(warehouseId);
+        model.addAttribute("warehouseId", store.getStoreId());
+        model.addAttribute("warehouseAddress", store.getAddress());
         model.addAttribute("workers", workerService.getWorkerDetailsById(warehouseId));
         return "warehouse/warehousedetails";
     }

@@ -30,11 +30,11 @@
 <br>
 <div class="container" id="card-container">
     <div class="row">
-        <div class="col-sm-4" th:if="${not #lists.isEmpty(warehouses)}" th:each="warehouse: ${warehouses}">
+        <div class="col-md-3 col-sm-12" th:if="${not #lists.isEmpty(warehouses)}" th:each="warehouse: ${warehouses}">
             <div class="card" id="card-id">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted">Warehouse Address</h6>
-                    <h5 class="card-title" th:text="${warehouse.address}"></h5>
+                    <h5 id= "card-title" class="card-title" th:text="${warehouse.address}"></h5>
 
                     <a th:href="${'/warehouse/warehousedetails/' + warehouse.storeId}" class="card-link">Warehouse Details</a>
                     <a th:href="${'/common/new-store/warehousedetails/' + warehouse.storeId}" class="card-link">Edit</a>
