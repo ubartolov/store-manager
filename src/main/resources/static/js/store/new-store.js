@@ -3,7 +3,7 @@ $(document).ready(
     function () {
 
         $('.navbar-brand').append('New Store');
-        $('.navbar-brand').css("color", "white");
+
         
         $('.navbar-text').css('visibility', "visible");
         $('.reference-button').css('visibility', "hidden");

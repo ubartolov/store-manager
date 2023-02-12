@@ -7,11 +7,32 @@ body {
 }
 .products-button {
     width: 49%;
-
+    background-color: #02acd6;
+    color: white;
 }
 
 .staff-button {
     width: 49%;
+    background-color: #02acd6;
+    color: white;
+}
+
+.btn-success {
+    background-color: #1146f5;
+    color: white;
+}
+
+.btn-success:focus {
+    background-color: #0d3cd6;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #0d3cd6;
+}
+
+.btn-success:disabled {
+    background-color: #6386f7;
 }
 
 #page-title {
@@ -21,9 +42,9 @@ body {
     margin-bottom: 40px;
     margin-top: 40px;
     font-size: 45;
-    color: #32CD32;
-    background-color: #2F4F4F;
+    color: white;
+    background-color: #1146f5;
     height: 70px;
     line-height: 70px;
-    border-radius: 20px;
+    border-radius: 10px;
 }
