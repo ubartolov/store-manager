@@ -13,3 +13,20 @@ body {
 .second-alignment-div {
     float:right; width:45%; margin: 20px;
 }
+.btn-success {
+    background-color: #1146f5;
+    color: white;
+}
+
+.btn-success:focus {
+    background-color: #0d3cd6;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #0d3cd6;
+}
+
+.btn-success:disabled {
+    background-color: #6386f7;
+}

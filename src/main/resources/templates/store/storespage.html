@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>
-        Warehouse
+        Stores
     </title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
@@ -35,16 +35,20 @@
             <div class="card" id="card-id">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted">Store Address</h6>
-                    <h5 id= "card-title" class="card-title" th:text="${store.address}"></h5>
+                    <h5 id= "card-title" class="card-title store-address" th:text="${store.address}"></h5>
 
                     <a th:href="${'/store/storedetails/' + store.storeId}" class="card-link">Store Details</a>
                     <a th:href="${'/common/new-store/storespage/' + store.storeId}" class="card-link">Edit</a>
+                    <a class="card-link delete-button">Delete</a>
+                    <input type="hidden" th:value="${store.address}" class="storeInputAddress">
+                    <input type="hidden" th:value="${store.storeId}" class="storeInputId">
                 </div>
             </div>
         </div>
     </div>
 </div>
 <br>
+<div th:insert="fragments/popup_modal.html :: modal_fragment"></div>
 
 </body>
 </html>

@@ -63,6 +63,7 @@ public class StoreController {
         return "common/new-store";
     }
 
+
     @RequestMapping(path = "/store/add-new-store", method = RequestMethod.POST)
     public ResponseEntity<?> addingNewStore (@RequestBody StoreDto storeDto) {
         storeService.addOrUpdateStore(storeDto);
@@ -73,5 +74,11 @@ public class StoreController {
     public ResponseEntity<?> editingStore (@PathVariable(name = "storeId") Long id) {
         StoreDto storeDto = storeService.findByIdDto(id);
         return new ResponseEntity<>(storeDto, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(path = "/delete-store/{storeId}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> deleteStore(@PathVariable(name = "storeId") Long id) {
+        storeService.deleteById(id);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

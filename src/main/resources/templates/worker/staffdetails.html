@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>
-        Worker Details
+        Staff Details
     </title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
@@ -26,7 +26,6 @@
 <script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 <script type="text/javascript" th:src="@{/js/worker/staffdetails.js}"></script>
 
-<input type="hidden" th:value="${warehouseId}" id="warehouseIdInput">
 
 <div th:insert="fragments/nav_menu.html :: nav-menu-fragment"></div>
 <br>
@@ -58,12 +57,12 @@
                 <td><a class="btn btn-info" type="button"
                        th:href="${'/worker/add-new-worker/' + worker.workerId}">Edit</a></td>
                 <td class="dropdown show transfer-dropdown">
-                    <a class="btn btn-success dropdown-toggle dropdownMenuLink" href="#" type="button"
-                       id="dropdownMenuLink"
+                    <a class="btn btn-success dropdown-toggle transfer-button" href="#" type="button"
+                       id="transfer-button"
                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Transfer
                     </a>
-                    <div id="add-product-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <div id="add-product-dropdown" class="dropdown-menu" aria-labelledby="transfer-button">
                         <form class="px-4 py-3 transfer-form">
                             <label>Transfer To :</label>
                             <input type="hidden" th:value="${worker.workerId}" class="workerIdInput">

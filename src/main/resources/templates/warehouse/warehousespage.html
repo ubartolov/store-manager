@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>
-        Warehouse
+        Warehouses
     </title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
@@ -39,7 +39,9 @@
 
                     <a th:href="${'/warehouse/warehousedetails/' + warehouse.storeId}" class="card-link">Warehouse Details</a>
                     <a th:href="${'/common/new-store/warehousedetails/' + warehouse.storeId}" class="card-link">Edit</a>
-
+                    <a class="card-link delete-button">Delete</a>
+                    <input type="hidden" th:value="${warehouse.address}" class="warehouseInputAddress">
+                    <input type="hidden" th:value="${warehouse.storeId}" class="warehouseInputId">
                 </div>
             </div>
         </div>

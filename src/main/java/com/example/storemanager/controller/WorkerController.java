@@ -70,4 +70,10 @@ public class WorkerController {
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
+    @RequestMapping(path = "/worker/get-worker/{workerId}", method = RequestMethod.GET)
+    public ResponseEntity<?> transferWorkerTo(@PathVariable(name = "workerId") Long id) {
+        WorkerInfoDto worker = workerService.findByIdToDto(id);
+        return new ResponseEntity<>(worker, HttpStatus.ACCEPTED);
+    }
+
 }
