@@ -13,5 +13,31 @@ $(document).ready(
             referanceButton.href = link;
         });
 
+
+        $('.delete-button').on('click', function () {
+            var address = $(this).siblings('.storeInputAddress').val();
+            var storeId = $(this).siblings('.storeInputId').val();
+
+            console.log(address);
+            console.log(storeId);
+
+            $.ajax({
+                type: 'PATCH',
+                contentType: 'application/json',
+                url: "/delete-store/" + storeId,
+                cache: false,
+                timeout: 60000,
+                success: function () {
+                    var headerText = "Successfully removed a Store";
+                    var bodyText = address;
+                    drawModal(headerText, bodyText, '/store/storespage');
+
+                },
+                error: function (e) {
+                    var response = JSON.parse(e.responseText);
+                    alert(response.prettyErrorMessage);
+                }
+            })
+        });
     }
 );

@@ -18,6 +18,8 @@ public interface StoreService {
 
     void delete(Store store);
 
+    void deleteById(Long id);
+
     Store findById(Long id);
 
 

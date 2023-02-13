@@ -1,11 +1,33 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #2F4F4F;
+    background-color: #edf8fa;
 }
 .container {
   display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 5em;
+}
+.body-div {
+    padding: 30px;
+    border: solid;
+    border-color: #cdf3fa;
+    width: 50%;
+    height: 20%;
+    background-color: white;
+}
+
+.btn-success {
+    background-color: #1146f5;
+    color: white;
+}
+
+.btn-success:focus {
+    background-color: #0d3cd6;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #0d3cd6;
 }
 

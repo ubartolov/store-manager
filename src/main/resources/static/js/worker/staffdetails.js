@@ -11,6 +11,31 @@ $(document).ready(
             referanceButton.href = link;
         });
 
+        $('.transfer-button').on('click', function () {
+            var button = this;
+            var workerId = $(button).siblings('.dropdown-menu').children('.transfer-form').children(".workerIdInput").val();
+    
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: "/worker/get-worker/" + workerId,
+                dataType: 'json',
+                cache: false,
+                timeout: 50000,
+                success: function (data) {
+                    console.log(data);
+                    // var dropdownMenu = $(button).siblings('.dropdown-menu');
+                    // var transferForm = $(dropdownMenu).children('.transfer-form');
+                    // var transferDiv = $(transferForm).children('.transfer-to-div');
+                    
+                    $(".transfer-select option[value='" + data.storeId + "']").prop('selected', true);
+                },
+                error: function (e) {
+                    var response = JSON.parse(e.responseText);
+                    alert(response.prettyErrorMessage);
+                }
+            }); 
+        })
     
 
         $('.request-button').on('click', function() {
@@ -36,7 +61,7 @@ $(document).ready(
                 timeout: 50000,
                 success: function () {
                     var headerText = 'Successfully transfered ' + firstName + ' ' + lastName;
-                    drawModal(headerText, firstName, "/worker/staffdetails")
+                    drawModal(headerText, firstName, "/worker/staffdetails");
                 },
                 error: function (e) {
                     var response = JSON.parse(e.responseText);

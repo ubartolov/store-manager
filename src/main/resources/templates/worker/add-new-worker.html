@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>
-        Request New Product
+        Add New Worker
     </title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
 
     <link rel="stylesheet" th:href="@{/css/worker/add-new-worker.css}">
@@ -20,8 +20,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
 <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" th:src="@{/js/common/common.js}"></script>
@@ -34,7 +34,7 @@
 
 <div class="dropdown-divider"></div>
 
-<div class="container">
+<div class="container body-div">
     <form class="worker-form">
         <input type="hidden" id="workerId">
         <div class="first-alignment-div">
@@ -66,7 +66,8 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Position</span>
                 </div>
-                <select class="form-select form-select-sm" id="worker-position-select" aria-label=".form-select-sm example">
+                <select class="form-select form-select-sm" id="worker-position-select"
+                        aria-label=".form-select-sm example">
                     <div th:each="position: ${positions}" id="positionIdDiv">
                         <option th:value="${position.positionId}"
                                 th:text="${position.positionName}"></option>
@@ -77,7 +78,8 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Store/Warehouse</span>
                 </div>
-                <select class="form-select form-select-sm" id="worker-store-select" aria-label=".form-select-sm example">
+                <select class="form-select form-select-sm" id="worker-store-select"
+                        aria-label=".form-select-sm example">
                     <div th:each="store: ${stores}" id="storeIdDiv">
                         <option th:value="${store.storeId}"
                                 th:text="${store.address}"></option>

@@ -69,7 +69,11 @@ public class StoreServiceImpl implements StoreService {
     public void delete(Store store) {
         storeRepository.delete(store);
     }
-
+    @Override
+    public void deleteById (Long id) {
+        Store store = findById(id);
+        delete(store);
+    }
     @Override
     public Store findById(Long id) {
         Optional<Store> optionalStore = storeRepository.findById(id);
