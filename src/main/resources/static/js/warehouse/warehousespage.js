@@ -1,10 +1,7 @@
 $(document).ready(
     
     function() {
-
-        $('.navbar-brand').append('All Warehouse Locations');
         
-
         $('.reference-button').append('Add New Store');
         $('.navbar-text').css('visibility', 'visible');
         
@@ -15,8 +12,8 @@ $(document).ready(
         });
 
         $('.delete-button').on('click', function () {
-            var address = $(this).siblings('.warehouseInputAddress').val();
-            var storeId = $(this).siblings('.warehouseInputId').val();
+            var address = $(this).parent('.list-group-item').parent('.list-group').siblings('.warehouseInputAddress').val();
+            var storeId = $(this).parent('.list-group-item').parent('.list-group').siblings('.warehouseInputId').val();
 
             console.log(address);
             console.log(storeId);

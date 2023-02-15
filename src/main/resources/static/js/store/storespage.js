@@ -2,7 +2,6 @@ $(document).ready(
 
     function() {
 
-        $('.navbar-brand').append('All Store Locations');
         $('.navbar-text').css('visibility', 'visible');
 
         $('.reference-button').append('Add New Store');
@@ -15,8 +14,8 @@ $(document).ready(
 
 
         $('.delete-button').on('click', function () {
-            var address = $(this).siblings('.storeInputAddress').val();
-            var storeId = $(this).siblings('.storeInputId').val();
+            var address = $(this).parent('.list-group-item').parent('.list-group').siblings('.storeInputAddress').val();
+            var storeId = $(this).parent('.list-group-item').parent('.list-group').siblings('.storeInputId').val();
 
             console.log(address);
             console.log(storeId);

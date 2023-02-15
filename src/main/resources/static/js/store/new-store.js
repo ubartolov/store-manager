@@ -1,9 +1,6 @@
 $(document).ready(
 
     function () {
-
-        $('.navbar-brand').append('New Store');
-
         
         $('.navbar-text').css('visibility', "visible");
         $('.reference-button').css('visibility', "hidden");

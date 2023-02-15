@@ -35,11 +35,29 @@
             <div class="card" id="card-id">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted">Warehouse Address</h6>
-                    <h5 id= "card-title" class="card-title" th:text="${warehouse.address}"></h5>
+                    <h5 id="card-title" class="card-title" th:text="${warehouse.address}"></h5>
 
-                    <a th:href="${'/warehouse/warehousedetails/' + warehouse.storeId}" class="card-link">Warehouse Details</a>
-                    <a th:href="${'/common/new-store/warehousedetails/' + warehouse.storeId}" class="card-link">Edit</a>
-                    <a class="card-link delete-button">Delete</a>
+                    <ul class="list-group list-group-flush text-center">
+                        <li class="list-group-item">
+                            <a th:href="${'/warehouse/warehousedetails/' + warehouse.storeId}" class="btn card-link"
+                               type="button">
+                                Details
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a th:href="${'/common/new-store/warehousedetails/' + warehouse.storeId}"
+                               class="btn card-link"
+                               type="button">
+                                Edit
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a class="btn card-link delete-button" type="button">
+                                Delete
+                            </a>
+                        </li>
+                    </ul>
+
                     <input type="hidden" th:value="${warehouse.address}" class="warehouseInputAddress">
                     <input type="hidden" th:value="${warehouse.storeId}" class="warehouseInputId">
                 </div>

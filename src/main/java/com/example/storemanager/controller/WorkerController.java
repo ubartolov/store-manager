@@ -57,6 +57,11 @@ public class WorkerController {
         model.addAttribute("stores", storeService.findAll());
         return "/worker/add-new-worker";
     }
+    @RequestMapping(path = "/worker/delete-worker/{workerId}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> deleteWorker(@PathVariable(name = "workerId") Long workerId) {
+        workerService.deleteById(workerId);
+        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
+    }
 
     @RequestMapping(path = "/worker/edit-worker/{workerId}", method = RequestMethod.GET)
     public ResponseEntity<?> returnWorker(@PathVariable(name = "workerId") Long id) {

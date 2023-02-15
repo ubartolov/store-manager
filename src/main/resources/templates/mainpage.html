@@ -13,52 +13,29 @@
 </head>
 <body>
 
-<div class="container-fluid" id="title-container">
-    <div class="row">
-        <div class="col">
-            <h2 id="h2-title">GAMING COMPANY</h2>
-        </div>
+<nav class="navbar" id="title-container">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img th:src="@{/images/logo.png}" alt="" width="170" height="29" class="d-inline-block align-text-top">
+        </a>
     </div>
-</div>
-<div class="container col-12 vertical-center" >
-    <div class="container" id="options-container" align="center">
-        <div class="row justify-content-around" style="height: 300px;">
-            <div class="col-md-4 col-sm-12" id="store-col">
-<!--                <div class="card">-->
-<!--                    <div class="card-header">-->
-<!--                        <h5 class="card-title"><a href="store/storespage">Stores</a></h5>-->
-<!--                    </div>-->
-                    <div class="card-body" onclick="location.href='store/storespage';">
-                        <p class="card-text">
-                            Browse through all current Store locations, available products and current staff information
-                        </p>
-                        <h5 class="card-title">Stores</h5>
-                    </div>
-<!--                </div>-->
+</nav>
+
+<div class="container col-12" id="options-container" align="center">
+    <div class="row justify-content-around vertical-center">
+        <div class="col-md-4 col-sm-12" id="store-col">
+            <div class="card" onclick="location.href='store/storespage';">
+                <h5 class="card-title">Stores</h5>
             </div>
-            <div class="col-md-4 col-sm-12" id="warehouse-col">
-<!--                <div class="card">-->
-<!--                    <div class="card-header">-->
-<!--                        <h5 class="card-title"><a href="warehouse/warehousespage">Warehouses</a></h5>-->
-<!--                    </div>-->
-                    <div class="card-body" onclick="location.href='warehouse/warehousespage';">
-                        <p class="card-text">
-                            All current Warehouse locations, current in stock products and current staff information
-                        </p>
-                        <h5 class="card-title">Warehouses</h5>
-                    </div>
-<!--                </div>-->
+        </div>
+        <div class="col-md-4 col-sm-12" id="warehouse-col">
+            <div class="card" onclick="location.href='warehouse/warehousespage';">
+                <h5 class="card-title">Warehouses</h5>
             </div>
-            <div class="col-md-4 col-sm-12" id="staff-col">
-<!--                <div class="card">-->
-<!--                    <div class="card-header">-->
-<!--                        <h5 class="card-title"><a href="worker/staffdetails"> Staff </a></h5>-->
-<!--                    </div>-->
-                    <div class="card-body" onclick="location.href='worker/staffdetails';">
-                        <p class="card-text">Current staff personal information</p>
-                        <h5 class="card-title">Staff</h5>
-                    </div>
-<!--                </div>-->
+        </div>
+        <div class="col-md-4 col-sm-12" id="staff-col">
+            <div class="card" onclick="location.href='worker/staffdetails';">
+                <h5 class="card-title">Staff</h5>
             </div>
         </div>
     </div>

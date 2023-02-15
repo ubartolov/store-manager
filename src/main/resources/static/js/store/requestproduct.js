@@ -4,7 +4,6 @@ $(document).ready(
 
     
         $('.request-button').prop('disabled', true);
-        $('.navbar-brand').append('Currently Not in Store');
         
         $('.navbar-text').css('visibility', "visible");
         $('.reference-button').css('visibility', "hidden");
