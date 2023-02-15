@@ -4,33 +4,34 @@ $(document).ready(
     
         var workerId = $('#workerIdInput').val();
 
-        $.ajax({
-            type: 'GET',
-            contentType: 'application/json',
-            url: "/worker/edit-worker/" + workerId,
-            dataType: 'json',
-            cache: false,
-            timeout: 50000,
-            success: function (data) {
-                console.log(data);
-                $("#first-name-input").val(data.firstName);
-                $("#last-name-input").val(data.lastName);
-                $("#email-input").val(data.email);
-                $("#address-input").val(data.homeAddress);
-                $("#workerId").val(data.workerId);
-
-                $("#worker-position-select option[value='" + data.positionId + "']").prop('selected', true);
-                $("#worker-store-select option[value='" + data.storeId + "']").prop('selected', true);
-                
-            },
-            error: function (e) {
-                alert(response.prettyErrorMessage);
-            }
-        });
-        
+        if (workerId != null && workerId != "") {
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: "/worker/edit-worker/" + workerId,
+                dataType: 'json',
+                cache: false,
+                timeout: 50000,
+                success: function (data) {
+                    console.log(data);
+                    $("#first-name-input").val(data.firstName);
+                    $("#last-name-input").val(data.lastName);
+                    $("#email-input").val(data.email);
+                    $("#address-input").val(data.homeAddress);
+                    $("#workerId").val(data.workerId);
+    
+                    $("#worker-position-select option[value='" + data.positionId + "']").prop('selected', true);
+                    $("#worker-store-select option[value='" + data.storeId + "']").prop('selected', true);
+                    
+                },
+                error: function (e) {
+                    alert(response.prettyErrorMessage);
+                }
+            });
+        }
         
         $('.request-button').prop('disabled', true);
-        $('.navbar-brand').append('New Worker');
+        
         $('.navbar-text').css('visibility', "visible");
         $('.reference-button').css('visibility', "hidden");
         $('.navbar-text').append("Enter Worker Information");
@@ -46,8 +47,10 @@ $(document).ready(
             var selectDiv = $('#worker-position-select');
             var positionId = selectDiv.value;
 
-            if (inputFirstName != null && inputLastName != null && inputHomeAddress != null && inputEmail != null) {
+            if (inputFirstName != "" && inputLastName != "" && inputHomeAddress != "" && inputEmail != "") {
                 $('.submit-button').prop('disabled', false);
+            } else {
+                $('.submit-button').prop('disabled', true);
             }
         });
         $('.submit-button').on('click', function () {

@@ -30,4 +30,7 @@ body {
 .btn-success:hover {
     background-color: #0d3cd6;
 }
+.btn-success:disabled {
+    background-color: #0d3cd6;
+}
 

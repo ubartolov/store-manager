@@ -23,6 +23,8 @@ public interface WorkerService {
 
     void delete(Worker worker);
 
+    void deleteById(Long id);
+
     List<WorkerInfoDto> getAllWorkerDetails();
 
     List<WorkerInfoDto> getWorkerDetailsById(Long storeId);

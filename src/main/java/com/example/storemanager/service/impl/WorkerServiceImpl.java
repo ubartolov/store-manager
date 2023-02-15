@@ -117,6 +117,14 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
+    public void deleteById(Long id) {
+        Worker worker = findById(id);
+        if (worker.getWorkerId() != null) {
+            delete(worker);
+        }
+        // throw exception
+    }
+    @Override
     public List<WorkerInfoDto> getAllWorkerDetails() {
         List<WorkerInfoDto> list = new ArrayList<>();
         for (Worker worker : findAll()) {

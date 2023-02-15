@@ -4,7 +4,6 @@ $(document).ready(
 
         $('.order-button').prop('disabled', true);
         $('.request-button').prop('disabled', true);
-        $('.navbar-brand').append('New Product');
 
         $('.navbar-text').css('visibility', "visible");
         $('.reference-button').css('visibility', "hidden");
