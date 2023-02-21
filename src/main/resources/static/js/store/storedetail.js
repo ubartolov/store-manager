@@ -2,17 +2,24 @@ $(document).ready(
 
     function () {
 
-        $('.navbar-text').css('visibility', 'visible');
-        $('.reference-button').append('Request New Product');
+        localeSelect();
 
-        $('.reference-button').click(function() {
+        var langParam = Cookies.get("lang");
+        var buttonText = "Request New Product";
+        if (langParam == "rs") {
+            buttonText = "Zatraži Nov Proizvod";
+        }
+        $('.navbar-text').css('visibility', 'visible');
+        $('.reference-button').append(buttonText);
+
+        $('.reference-button').click(function () {
             var storeId = $('#storeIdInput').val();
             var referanceButton = this;
-            var link = '/store/requestproduct/' + storeId; 
+            var link = '/store/requestproduct/' + storeId;
             referanceButton.href = link;
         })
-        
-        
+
+
 
 
         $(".dropdownMenuLink").click(function () {
@@ -107,7 +114,7 @@ $(document).ready(
             var productId = $(buttonId).siblings('.productIdInput').val();
             var productName = $(buttonId).siblings('.productNameInput').val();
             var requestAmount = $(buttonId).siblings(".insert-div").children(".request-amount").val();
-            var body = {}
+            var body = {};
 
             body['storeId'] = +storeId;
             body['warehouseId'] = +warehouseId;
@@ -127,7 +134,10 @@ $(document).ready(
                 cache: false,
                 timeout: 60000,
                 success: function (data) {
-                    var headerText = "Successfully added more units of"
+                    var headerText = "Successfully added more units of an article"
+                    if(langParam == "rs") {
+                        headerText = "Uspešno dodato jos jedinica artikla"
+                    }
                     var bodyText = productName;
                     drawModal(headerText, bodyText, '/store/storedetails/' + storeId);
                 },
@@ -144,10 +154,6 @@ $(document).ready(
             var sumbitButton = $(returnAmount).parent().siblings('.submit-return-button');
             var quantity = $(returnAmount).val();
             var currentlyInStore = $(returnAmount).parent().siblings('.quantityInput').val();
-
-            console.log(currentlyInStore);
-
-
 
 
             if (+quantity <= 0 || +quantity > +currentlyInStore) {
@@ -188,6 +194,9 @@ $(document).ready(
                 timeout: 60000,
                 success: function (data) {
                     var headerText = "Successfully returned a product to warehouse"
+                    if(langParam == "rs") {
+                        headerText = "Uspešno vraćen proizvod u magacin"
+                    }
                     var bodyText = productName;
                     drawModal(headerText, bodyText, '/store/storedetails/' + storeId);
                 },
@@ -197,7 +206,8 @@ $(document).ready(
                 }
             })
         });
-        $('#worker-table').DataTable();
-        $('#main-table').DataTable();
+
+        dataTableWithLocale('#main-table', langParam);
+        dataTableWithLocale('#worker-table', langParam);
     }
 );

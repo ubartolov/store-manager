@@ -1,9 +1,16 @@
 $(document).ready(
 
     function () {
+        localeSelect();
+        var langParam = Cookies.get("lang");
+        var buttonText = "Add new worker";
+        if(langParam == "rs") {
+            buttonText = "Dodaj Radnika"
+        }
+
 
         $('.navbar-text').css('visibility', 'visible')
-        $('.reference-button').append('Add new worker');
+        $('.reference-button').append(buttonText);
         $('.reference-button').click(function() {
             var referanceButton = this;
             var link = '/worker/add-new-worker'; 
@@ -57,6 +64,9 @@ $(document).ready(
                 timeout: 50000,
                 success: function () {
                     var headerText = 'Successfully transfered ' + firstName + ' ' + lastName;
+                    if(langParam = "rs") {
+                        headerText = "Uspešno prebačen " +  firstName + ' ' + lastName; 
+                    }
                     drawModal(headerText, storeAddress, "/worker/staffdetails");
                 },
                 error: function (e) {
@@ -81,7 +91,10 @@ $(document).ready(
                 cache: false,
                 timeout: 50000,
                 success: function () {
-                    var headerText = 'Successfully deleted a Worker';
+                    var headerText = 'Successfully deleted a worker';
+                    if(langParam == "rs") {
+                        headerText = "Uspešno obrisan radnik"
+                    }
                     drawModal(headerText, fullName, "/worker/staffdetails");
                 },
                 error: function (e) {
@@ -92,7 +105,7 @@ $(document).ready(
         })
 
 
-        $('#main-table').DataTable();
+        dataTableWithLocale('#main-table', langParam);
         
     }
 );

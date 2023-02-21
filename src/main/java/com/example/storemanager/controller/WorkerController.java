@@ -49,6 +49,11 @@ public class WorkerController {
         workerService.addOrUpdateNewWorker(worker);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
+    @RequestMapping(path = "/worker/edit-existing-worker", method = RequestMethod.PATCH)
+    public ResponseEntity<?> editExistingWorker(@RequestBody WorkerInfoDto worker) {
+        workerService.addOrUpdateNewWorker(worker);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 
     @RequestMapping(path = "/worker/add-new-worker/{workerId}")
     public String editWorker (@PathVariable(name = "workerId") Long workerId, Model model) {

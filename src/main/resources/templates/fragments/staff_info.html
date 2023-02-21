@@ -16,17 +16,19 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
 
 <div th:fragment="info_fragment" class="collapse" id="collapseExample">
     <table class="table table-striped table-sm" id="worker-table">
         <thead>
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Home Address</th>
-            <th>Position</th>
+            <th th:text="#{staffdetail.firstName}"></th>
+            <th th:text="#{staffdetail.lastName}"></th>
+            <th th:text="#{staffdetail.email}"></th>
+            <th th:text="#{staffdetail.homeAddress}"></th>
+            <th th:text="#{staffdetail.position}"></th>
+
         </tr>
         </thead>
         <tbody>

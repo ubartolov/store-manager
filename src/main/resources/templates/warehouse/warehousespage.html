@@ -23,6 +23,7 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
 <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 <script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 <script type="text/javascript" th:src="@{/js/warehouse/warehousespage.js}"></script>
 
@@ -32,29 +33,51 @@
 <div class="container" id="card-container">
     <div class="row">
         <div class="col-md-3 col-sm-12" th:if="${not #lists.isEmpty(warehouses)}" th:each="warehouse: ${warehouses}">
+
             <div class="card" id="card-id">
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Warehouse Address</h6>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="#{warehousepage.warehouseaddress}"></h6>
                     <h5 id="card-title" class="card-title" th:text="${warehouse.address}"></h5>
 
-                    <ul class="list-group list-group-flush text-center">
+                    <ul class="list-group list-group-flush text-center options-list">
                         <li class="list-group-item">
                             <a th:href="${'/warehouse/warehousedetails/' + warehouse.storeId}" class="btn card-link"
-                               type="button">
-                                Details
+                               type="button" th:text="#{warehousepage.details}">
                             </a>
                         </li>
                         <li class="list-group-item">
                             <a th:href="${'/common/new-store/warehousedetails/' + warehouse.storeId}"
                                class="btn card-link"
-                               type="button">
-                                Edit
+                               type="button" th:text="#{warehousepage.edit}">
                             </a>
                         </li>
-                        <li class="list-group-item">
-                            <a class="btn card-link delete-button" type="button">
-                                Delete
+                        <li class="list-group-item dropdown delete-dropdown">
+
+                            <a class="btn dropdown-toggle delete-button" type="button"
+                               id="delete-button"
+                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                               th:text="#{warehousepage.delete}">
                             </a>
+                            <div id="delete-warehouse-drop" class="dropdown-menu" aria-labelledby="delete-button">
+                                <form class="form-horizontal delete-form">
+                                    <div class="px-4 py-3 div-list-dropdown">
+                                        <h6 th:text="#{warehousepage.deleteWarehouse}"></h6>
+                                        <input type="hidden" th:value="${warehouse.storeId}" class="warehouseIdInput">
+                                        <input type="hidden" th:value="${warehouse.address}" class="warehouseAddressInput">
+                                        <select class="form-select form-select-sm delete-warehouse-select"
+                                                aria-label=".form-select-sm example">
+                                            <div th:each="warehouse: ${warehouses}" class="warehouseIdDiv">
+                                                <option th:value="${warehouse.storeId}"
+                                                        th:text="${warehouse.address}"></option>
+                                            </div>
+                                        </select>
+                                        <br>
+                                        <button type="button" class="btn btn-success request-button"
+                                        th:text="#{staffdetail.submitButton}"></button>
+                                    </div>
+                                </form>
+                            </div>
+
                         </li>
                     </ul>
 
@@ -65,6 +88,7 @@
         </div>
     </div>
 </div>
+<div th:insert="fragments/popup_modal.html :: modal_fragment"></div>
 <br>
 
 

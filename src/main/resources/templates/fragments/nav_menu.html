@@ -29,22 +29,27 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" style="color: white;" href="/">Home</a>
+                    <a class="nav-link" style="color: white;" href="/" th:text="#{navbar.home}"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: white;" href="/store/storespage">Store</a>
+                    <a class="nav-link" style="color: white;" href="/store/storespage" th:text="#{navbar.store}"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: white;" href="/warehouse/warehousespage">Warehouse</a>
+                    <a class="nav-link" style="color: white;" href="/warehouse/warehousespage" th:text="#{navbar.warehouse}"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: white;" href="/worker/staffdetails">Staff</a>
+                    <a class="nav-link" style="color: white;" href="/worker/staffdetails" th:text="#{navbar.staff}"></a>
                 </li>
             </ul>
 
             <span class="navbar-text" style="visibility: hidden;">
                 <a class="btn reference-button" style="background-color: #1146f5; color: white;" href=""></a>
             </span>
+
+            <select id="locales" class="form-select" style="margin-left: 10px; width: 120px;">
+                <option value="us" th:text="#{lang.eng}"></option>
+                <option value="rs" th:text="#{lang.rs}"></option>
+            </select>
         </div>
     </div>
 </nav>

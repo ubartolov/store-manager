@@ -2,10 +2,15 @@ $(document).ready(
 
     function() {
 
+        localeSelect();
+        var langParam = Cookies.get("lang");
+        var buttonText = "Request New Product";
+        if (langParam == "rs") {
+            buttonText = "Zatraži Nov Proizvod";
+        }
     
-        $('.navbar-brand').append('Warehouse Information');
         $('.navbar-text').css('visibility', 'visible')
-        $('.reference-button').append('Request New Product');
+        $('.reference-button').append(buttonText);
 
         $('.reference-button').click(function() {
             var warehouseId = $('#warehouseIdInput').val();
@@ -55,7 +60,10 @@ $(document).ready(
                 cache: false,
                 timeout: 60000,
                 success: function(data) {
-                    var headerText = 'Successfully added more units of';
+                    var headerText = "Successfully added more units of an article"
+                    if(langParam == "rs") {
+                        headerText = "Uspešno dodato jos jedinica artikla"
+                    }
                     var bodyText = productName;
                     drawModal(headerText, bodyText, '/warehouse/warehousedetails/' + warehouseId);
                 },
@@ -68,10 +76,10 @@ $(document).ready(
 
         $('.delete-button').on('click', function() {
             var deleteButton = this;
-            var productId = $(deleteButton).parent('.button-td').siblings('.td-dropdown').children('.dropdown-menu').children('#request-form')
+            var productId = $(deleteButton).parent('.button-td').siblings('.td-dropdown').children('.dropdown-menu').children('.request-form')
                             .children('.insert-div').children('.productIdInput').val();
             var warehouseId = $('#warehouseIdInput').val();
-            var productName = $(deleteButton).parent('.button-td').siblings('.td-dropdown').children('.dropdown-menu').children('#request-form')
+            var productName = $(deleteButton).parent('.button-td').siblings('.td-dropdown').children('.dropdown-menu').children('.request-form')
             .children('.insert-div').children('.productNameInput').val();
 
             var body = {};
@@ -89,7 +97,10 @@ $(document).ready(
                 cache: false,
                 timeout: 60000,
                 success: function(data) {
-                    var headerText = 'Successfully deleted';
+                    var headerText = 'Successfully deleted a product';
+                    if(langParam == "rs") {
+                        headerText = "Uspešno obrisan proizvod"    
+                    }
                     var bodyText = productName;
                     drawModal(headerText, bodyText, '/warehouse/warehousedetails/' + warehouseId);
                     
@@ -101,7 +112,7 @@ $(document).ready(
             });
 
         });
-        $('#worker-table').DataTable();
-        $('#main-table').DataTable();
+        dataTableWithLocale('#main-table', langParam);
+        dataTableWithLocale('#worker-table', langParam);
     }
 );

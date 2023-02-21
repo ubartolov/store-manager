@@ -27,7 +27,7 @@ public class Store {
     @Column(name = "store_type")
     private StoreType storeType = StoreType.WAREHOUSE;
 
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
     private List<StoreStock> storeStock = new ArrayList<>();
 
     @OneToMany(mappedBy = "store")

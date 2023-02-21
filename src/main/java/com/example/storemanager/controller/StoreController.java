@@ -76,9 +76,9 @@ public class StoreController {
         return new ResponseEntity<>(storeDto, HttpStatus.CREATED);
     }
 
-    @RequestMapping(path = "/delete-store/{storeId}", method = RequestMethod.PATCH)
+    /*@RequestMapping(path = "/delete-store/{storeId}", method = RequestMethod.PATCH)
     public ResponseEntity<?> deleteStore(@PathVariable(name = "storeId") Long id) {
         storeService.deleteById(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
-    }
+    }*/
 }
