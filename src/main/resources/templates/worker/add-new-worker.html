@@ -24,6 +24,7 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
 <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 <script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 <script type="text/javascript" th:src="@{/js/worker/add-new-worker.js}"></script>
 
@@ -40,31 +41,31 @@
         <div class="first-alignment-div">
             <div class="input-group input-group-sm mb-3 first-name-div">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">First Name</span>
+                    <span class="input-group-text" th:text="#{staffdetail.firstName}"></span>
                 </div>
                 <input type="text" class="form-control" id="first-name-input"/>
             </div>
             <div class="input-group input-group-sm mb-3 last-name-div">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Last Name</span>
+                    <span class="input-group-text" th:text="#{staffdetail.lastName}">Last Name</span>
                 </div>
                 <input type="text" class="form-control" id="last-name-input"/>
             </div>
             <div class="input-group input-group-sm mb-3 email-div">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Email</span>
+                    <span class="input-group-text" th:text="#{staffdetail.email}">Email</span>
                 </div>
                 <input type="email" class="form-control" id="email-input"/>
             </div>
             <div class="input-group input-group-sm mb-3 address-div">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Home Address</span>
+                    <span class="input-group-text" th:text="#{staffdetail.homeAddress}">Home Address</span>
                 </div>
                 <input type="email" class="form-control" id="address-input"/>
             </div>
             <div class="input-group input-group-sm mb-3 position-div">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Position</span>
+                    <span class="input-group-text" th:text="#{staffdetail.position}">Position</span>
                 </div>
                 <select class="form-select form-select-sm" id="worker-position-select"
                         aria-label=".form-select-sm example">
@@ -76,7 +77,7 @@
             </div>
             <div class="input-group input-group-sm mb-3 store-div">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Store/Warehouse</span>
+                    <span class="input-group-text" th:text="#{staffdetail.storeType}"></span>
                 </div>
                 <select class="form-select form-select-sm" id="worker-store-select"
                         aria-label=".form-select-sm example">
@@ -86,7 +87,7 @@
                     </div>
                 </select>
             </div>
-            <button type="button" class="btn btn-success submit-button">Submit</button>
+            <button type="button" class="btn btn-success submit-button" th:text="#{staffdetail.submitButton}"></button>
         </div>
     </form>
     <div th:insert="fragments/popup_modal.html :: modal_fragment"></div>

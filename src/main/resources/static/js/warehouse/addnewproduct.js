@@ -1,6 +1,9 @@
 $(document).ready(
 
     function () {
+        
+        localeSelect();
+        var langParam = Cookies.get("lang");
 
         $('.order-button').prop('disabled', true);
         $('.request-button').prop('disabled', true);
@@ -16,8 +19,10 @@ $(document).ready(
             var inputPrice = $(parentDiv).children('.price-div').children('.price-input').val();
             var inputQuantity = $(parentDiv).children('.quantity-div').children('.request-amount').val();
 
-            if (inputName != null && +inputPrice > 0 && +inputQuantity > 0) {
+            if (inputName != "" && +inputPrice > 0 && +inputQuantity > 0) {
                 $('.order-button').prop('disabled', false);
+            } else {
+                $('.order-button').prop('disabled', true);
             }
         });
 
@@ -28,7 +33,7 @@ $(document).ready(
             var productPrice = $(button).siblings('.price-div').children('.price-input').val();
             var requestAmount = $(button).siblings('.quantity-div').children('.request-amount').val();
 
-            if (+requestAmount >= 0 && +productPrice >= 0) {
+            if (+requestAmount >= 0 && +productPrice >= 0 && productName != "") {
                 var tableRow = '<tr class="table-detail-row">'
                     + '<td class="productNameData">' + productName + '</td>'
                     + '<td class="requestAmountData">' + requestAmount + '</td>'
@@ -37,7 +42,7 @@ $(document).ready(
                     + '<input type="hidden" class="warehouseIdData" value="' + warehouseId + '">'
                     + '</tr>'
 
-                $('#requestListTable').append(tableRow);
+                $('#table-body').append(tableRow);
                 $('.order-button').prop('disabled', true);
                 $('.request-button').prop('disabled', false);
                 $('.order-form').trigger("reset");
@@ -51,6 +56,7 @@ $(document).ready(
             $(this).parent().parent().remove();
 
         });
+
 
         $('.request-button').on('click', function () {
             var button = this;
@@ -89,6 +95,9 @@ $(document).ready(
                 timeout: 50000,
                 success: function (data) {
                     var headerText = 'Successfully added new products';
+                    if(langParam == "rs") {
+                        headerText = "Uspešno dodat nov proizvod"
+                    }
                     drawModalWithRetrurnedData(headerText, data, "/warehouse/warehousedetails/" + warehouseId)
                 },
                 error: function (e) {

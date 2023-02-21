@@ -1,10 +1,17 @@
 $(document).ready(
 
     function () {
-        
+
+        localeSelect();
+        var langParam = Cookies.get("lang");
+        var button = "Enter Local Details"
+        if(langParam == "rs") {
+            button = "Unesite Podatke lokala"
+        }
+
         $('.navbar-text').css('visibility', "visible");
         $('.reference-button').css('visibility', "hidden");
-        $('.navbar-text').append("Enter Store Details");
+        $('.navbar-text').append(button);
 
         $('submit-button').prop('disabled', true);
 
@@ -37,8 +44,10 @@ $(document).ready(
                 cache: false,
                 timeout: 50000,
                 success: function () {
-                    var headerText = 'Successfully added a new Store';
-
+                    var headerText = 'Successfully added a new local';
+                    if(langParam == "rs") {
+                        headerText = "Uspešno dodat nov lokal"
+                    }
                     drawModal(headerText, address, link)
                 },
                 error: function (e) {

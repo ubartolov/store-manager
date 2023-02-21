@@ -2,12 +2,19 @@ $(document).ready(
 
     function () {
 
+        localeSelect();
+
+        var langParam = Cookies.get("lang");
+        var buttonText = "Select Desired Products";
+        if(langParam == "rs") {
+            buttonText = "Izaberite proizvode"
+        }
     
         $('.request-button').prop('disabled', true);
         
         $('.navbar-text').css('visibility', "visible");
         $('.reference-button').css('visibility', "hidden");
-        $('.navbar-text').append("Select Desired Products");
+        $('.navbar-text').append(buttonText);
 
         $(".dropdownMenuLink").click(function () {
             var submitButton = $('.submit-button');
@@ -147,6 +154,9 @@ $(document).ready(
                 timeout: 50000,
                 success: function (data) {
                     var headerText = 'Successfully added'
+                    if(langParam == "rs") {
+                        headerText = "Uspešno dodat"
+                    }
                    drawModalWithRetrurnedData(headerText, data, "/store/storedetails/" + storeId);
 
                 },
@@ -162,7 +172,7 @@ $(document).ready(
 
         });
 
-        $('#main-table').DataTable();
+        dataTableWithLocale('#main-table', langParam);
     }
 
 

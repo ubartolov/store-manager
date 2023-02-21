@@ -1,7 +1,13 @@
 $(document).ready(
 
     function () {
-    
+        localeSelect();
+        var langParam = Cookies.get("lang");
+        var buttonText = "Enter Worker Information";
+        if(langParam == "rs") {
+            buttonText = "Unesi Informacije Radnika"
+        }
+
         var workerId = $('#workerIdInput').val();
 
         if (workerId != null && workerId != "") {
@@ -19,23 +25,23 @@ $(document).ready(
                     $("#email-input").val(data.email);
                     $("#address-input").val(data.homeAddress);
                     $("#workerId").val(data.workerId);
-    
+
                     $("#worker-position-select option[value='" + data.positionId + "']").prop('selected', true);
                     $("#worker-store-select option[value='" + data.storeId + "']").prop('selected', true);
-                    
+
                 },
                 error: function (e) {
                     alert(response.prettyErrorMessage);
                 }
             });
         }
-        
+
         $('.request-button').prop('disabled', true);
-        
+
         $('.navbar-text').css('visibility', "visible");
         $('.reference-button').css('visibility', "hidden");
-        $('.navbar-text').append("Enter Worker Information");
-        
+        $('.navbar-text').append(buttonText);
+
         $('.submit-button').prop('disabled', true);
         $('.finish-button').prop('disabled', true);
 
@@ -63,7 +69,7 @@ $(document).ready(
             var selectStoreDiv = $('#worker-store-select');
             var storeId = $(selectStoreDiv).val();
             var workerId = $("#workerId").val();
-            
+
 
             var fullName = firstName + ' ' + lastName;
 
@@ -75,30 +81,56 @@ $(document).ready(
             body['homeAddress'] = homeAddress;
             body['positionId'] = +positionId;
             body['storeId'] = +storeId;
+
             if (workerId != null && workerId != "") {
                 body['workerId'] = +workerId;
+
+                var bodyAsJson = JSON.stringify(body);
+                
+                $.ajax({
+                    type: 'PATCH',
+                    contentType: 'application/json',
+                    url: "/worker/edit-existing-worker",
+                    data: bodyAsJson,
+                    cache: false,
+                    timeout: 50000,
+                    success: function () {
+                        var headerText = 'Successfully edited a worker';
+                        if(langParam = "rs") {
+                            headerText = "Uspešno izmenjen radnik"
+                        }
+                        drawModal(headerText, fullName, "/worker/staffdetails")
+                    },
+                    error: function (e) {
+                        var response = JSON.parse(e.responseText);
+                        alert(response.prettyErrorMessage);
+                    }
+                });
+            } else {
+                var bodyAsJson = JSON.stringify(body);
+
+                $.ajax({
+                    type: 'POST',
+                    contentType: 'application/json',
+                    url: "/worker/new-worker",
+                    data: bodyAsJson,
+                    cache: false,
+                    timeout: 50000,
+                    success: function () {
+                        var headerText = 'Successfully added a new worker';
+                        if(langParam = "rs") {
+                            headerText = "Uspešno dodat nov radnik"
+                        }
+                        drawModal(headerText, fullName, "/worker/staffdetails")
+                    },
+                    error: function (e) {
+                        var response = JSON.parse(e.responseText);
+                        alert(response.prettyErrorMessage);
+                    }
+                });
             }
-            var bodyAsJson = JSON.stringify(body);
-            console.log(bodyAsJson);
+        });
 
-            $.ajax({
-                type: 'POST',
-                contentType: 'application/json',
-                url: "/worker/new-worker",
-                data: bodyAsJson,
-                cache: false,
-                timeout: 50000,
-                success: function () {
-                    var headerText = 'Successfully added a new Worker';
-                    drawModal(headerText, fullName, "/worker/staffdetails")
-                },
-                error: function (e) {
-                    var response = JSON.parse(e.responseText);
-                    alert(response.prettyErrorMessage);
-                }
-            });
-        });    
-
-        $('#main-table').DataTable();
+        dataTableWithLocale('#main-table', langParam);
     }
 );

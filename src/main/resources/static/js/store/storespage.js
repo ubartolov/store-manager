@@ -2,9 +2,16 @@ $(document).ready(
 
     function() {
 
+        localeSelect();
+
         $('.navbar-text').css('visibility', 'visible');
 
-        $('.reference-button').append('Add New Store');
+        var buttonText = "Add New Store";
+        var langParam = Cookies.get("lang");
+        if (langParam == "rs") {
+            buttonText = "Dodaj Radnju";
+        }
+        $('.reference-button').append(buttonText);
 
         $('.reference-button').click(function() {
             var referanceButton = this;
@@ -27,7 +34,10 @@ $(document).ready(
                 cache: false,
                 timeout: 60000,
                 success: function () {
-                    var headerText = "Successfully removed a Store";
+                    var headerText = "Successfully removed a store";
+                    if(langParam = "rs") {
+                        headerText = "Uspešno obrisana radnja"
+                    }
                     var bodyText = address;
                     drawModal(headerText, bodyText, '/store/storespage');
 

@@ -44,4 +44,11 @@ public class WarehouseController {
         return "warehouse/warehousedetails";
     }
 
+    @RequestMapping(path = "/warehouse/delete-store/{existingWarehouseId}/{warehouseId}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> deleteStore(@PathVariable(name = "existingWarehouseId") Long existingWarehouseId,
+                                         @PathVariable(name = "warehouseId") Long warehouseId) {
+        storeStockService.returnProductAndDeleteWarehouse(existingWarehouseId, warehouseId);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
 }

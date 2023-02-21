@@ -11,9 +11,7 @@ import com.example.storemanager.service.StoreStockService;
 import com.example.storemanager.validation.ValidationService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class StoreStockServiceImpl implements StoreStockService {
@@ -265,6 +263,50 @@ public class StoreStockServiceImpl implements StoreStockService {
             storeStock = existingStoreStock.get();
             storeStock.setQuantity(storeStock.getQuantity() + updateProductDto.getRequestAmount());
             storeStockRepository.save(storeStock);
+        }
+    }
+    public void returnProductAndDeleteWarehouse(Long existingWarehouseId, Long warehouseId) {
+        Store warehouse = storeService.findById(existingWarehouseId);
+        List<StoreStock> existingStoreStockList = warehouse.getStoreStock();
+        Store transferWarehouse = storeService.findById(warehouseId);
+        List<StoreStock> transferStoreStockList = transferWarehouse.getStoreStock();
+
+        Map<Product, Integer> productsInTransferWarehouse = new HashMap<>();
+
+        for (int i = 0; i < transferStoreStockList.size(); i++) {
+            productsInTransferWarehouse.put(transferStoreStockList.get(i).getProduct(), i);
+        }
+
+        for (StoreStock existingWarehouseStock : existingStoreStockList) {
+            if (productsInTransferWarehouse.containsKey(existingWarehouseStock.getProduct())) {
+                StoreStock transferStoreStock = transferStoreStockList.get(productsInTransferWarehouse.get(existingWarehouseStock.getProduct()));
+                Integer originalQuantity = transferStoreStock.getQuantity();
+                transferStoreStock.setQuantity(originalQuantity + transferStoreStock.getQuantity());
+                storeStockRepository.save(transferStoreStock);
+                existingWarehouseStock.setQuantity(0);
+                storeStockRepository.save(existingWarehouseStock);
+            } else {
+                StoreStock newStoreStock = new StoreStock();
+                newStoreStock.setStore(transferWarehouse);
+                newStoreStock.setQuantity(existingWarehouseStock.getQuantity());
+                newStoreStock.setProduct(existingWarehouseStock.getProduct());
+                storeStockRepository.save(newStoreStock);
+                existingWarehouseStock.setQuantity(0);
+                storeStockRepository.save(existingWarehouseStock);
+            }
+        }
+        deleteWarehouse(existingWarehouseId);
+    }
+
+    public void deleteWarehouse(Long existingWarehouseId) {
+        Store warehouse = storeService.findById(existingWarehouseId);
+        Iterator<StoreStock> iterator = warehouse.getStoreStock().iterator();
+        while (iterator.hasNext()) {
+            StoreStock storeStock = iterator.next();
+            if (storeStock.getQuantity() > 0) {
+                //TODO throw exception
+            }
+            warehouse.getStoreStock().remove(storeStock);
         }
     }
 
