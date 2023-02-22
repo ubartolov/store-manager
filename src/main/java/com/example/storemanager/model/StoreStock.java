@@ -22,7 +22,6 @@ public class StoreStock {
     private Integer quantity;
     @ManyToOne
     @JoinColumn(name = "store_id")
-    @JsonBackReference
     private Store store;
 
 }
