@@ -42,4 +42,6 @@ public interface StoreStockService {
     List<StoreStockDto> getDetailsById(Long storeId);
 
     void updateProductQuantity(UpdateProductDto updateProductDto);
+
+    void deleteWarehouse(Long existingWarehouseId, Long warehouseId);
 }

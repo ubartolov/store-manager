@@ -6,8 +6,11 @@ import com.example.storemanager.dto.*;
 import com.example.storemanager.model.Product;
 import com.example.storemanager.model.Store;
 import com.example.storemanager.model.StoreStock;
+import com.example.storemanager.model.Worker;
 import com.example.storemanager.service.ProductService;
+import com.example.storemanager.service.StoreService;
 import com.example.storemanager.service.StoreStockService;
+import com.example.storemanager.service.WorkerService;
 import com.example.storemanager.validation.ValidationService;
 import org.springframework.stereotype.Service;
 
@@ -18,20 +21,23 @@ public class StoreStockServiceImpl implements StoreStockService {
 
     private final StoreStockRepository storeStockRepository;
     private final StoreRepository storeRepository;
-    private final StoreServiceImpl storeService;
+    private final StoreService storeService;
     private final ProductService productService;
     private final ValidationService validationService;
+    private final WorkerService workerService;
 
     public StoreStockServiceImpl(StoreStockRepository storeStockRepository,
                                  StoreRepository storeRepository,
-                                 StoreServiceImpl storeService,
+                                 StoreService storeService,
                                  ProductService productService,
-                                 ValidationService validationService) {
+                                 ValidationService validationService,
+                                 WorkerService workerService) {
         this.storeStockRepository = storeStockRepository;
         this.storeRepository = storeRepository;
         this.storeService = storeService;
         this.productService = productService;
         this.validationService = validationService;
+        this.workerService = workerService;
     }
 
     @Override
@@ -265,49 +271,64 @@ public class StoreStockServiceImpl implements StoreStockService {
             storeStockRepository.save(storeStock);
         }
     }
-    public void returnProductAndDeleteWarehouse(Long existingWarehouseId, Long warehouseId) {
+    @Override
+    public void deleteWarehouse(Long existingWarehouseId, Long warehouseId) {
         Store warehouse = storeService.findById(existingWarehouseId);
-        List<StoreStock> existingStoreStockList = warehouse.getStoreStock();
         Store transferWarehouse = storeService.findById(warehouseId);
+
+        transferAllStoreStock(warehouse, transferWarehouse);
+        transferAllWorkers(warehouse, transferWarehouse);
+        validationService.validateWarehouseDelete(warehouse);
+        storeService.delete(warehouse);
+    }
+
+    private void transferAllStoreStock(Store warehouse, Store transferWarehouse) {
+        List<StoreStock> existingWarehouseStoreStock = warehouse.getStoreStock();
         List<StoreStock> transferStoreStockList = transferWarehouse.getStoreStock();
 
-        Map<Product, Integer> productsInTransferWarehouse = new HashMap<>();
+        Map<Product, StoreStock> productsInTransferWarehouse = new HashMap<>();
 
         for (int i = 0; i < transferStoreStockList.size(); i++) {
-            productsInTransferWarehouse.put(transferStoreStockList.get(i).getProduct(), i);
+            StoreStock storeStock = transferStoreStockList.get(i);
+            productsInTransferWarehouse.put(storeStock.getProduct(), storeStock);
         }
 
-        for (StoreStock existingWarehouseStock : existingStoreStockList) {
-            if (productsInTransferWarehouse.containsKey(existingWarehouseStock.getProduct())) {
-                StoreStock transferStoreStock = transferStoreStockList.get(productsInTransferWarehouse.get(existingWarehouseStock.getProduct()));
-                Integer originalQuantity = transferStoreStock.getQuantity();
+        Iterator<StoreStock> iterator = existingWarehouseStoreStock.iterator();
+
+        while (iterator.hasNext()) {
+            StoreStock existingWarehouseStock = iterator.next();
+            Product existingWarehouseProduct = existingWarehouseStock.getProduct();
+            Integer originalQuantity = existingWarehouseStock.getQuantity();
+            if (productsInTransferWarehouse.containsKey(existingWarehouseProduct)) {
+                StoreStock transferStoreStock = productsInTransferWarehouse.get(existingWarehouseProduct);
                 transferStoreStock.setQuantity(originalQuantity + transferStoreStock.getQuantity());
-                storeStockRepository.save(transferStoreStock);
-                existingWarehouseStock.setQuantity(0);
-                storeStockRepository.save(existingWarehouseStock);
             } else {
                 StoreStock newStoreStock = new StoreStock();
                 newStoreStock.setStore(transferWarehouse);
-                newStoreStock.setQuantity(existingWarehouseStock.getQuantity());
-                newStoreStock.setProduct(existingWarehouseStock.getProduct());
-                storeStockRepository.save(newStoreStock);
-                existingWarehouseStock.setQuantity(0);
-                storeStockRepository.save(existingWarehouseStock);
+                newStoreStock.setQuantity(originalQuantity);
+                newStoreStock.setProduct(existingWarehouseProduct);
+                transferWarehouse.getStoreStock().add(newStoreStock);
             }
+            iterator.remove();
+            storeStockRepository.delete(existingWarehouseStock);
         }
-        deleteWarehouse(existingWarehouseId);
+        storeService.saveOrUpdate(warehouse);
+        storeService.saveOrUpdate(transferWarehouse);
     }
 
-    public void deleteWarehouse(Long existingWarehouseId) {
-        Store warehouse = storeService.findById(existingWarehouseId);
-        Iterator<StoreStock> iterator = warehouse.getStoreStock().iterator();
-        while (iterator.hasNext()) {
-            StoreStock storeStock = iterator.next();
-            if (storeStock.getQuantity() > 0) {
-                //TODO throw exception
-            }
-            warehouse.getStoreStock().remove(storeStock);
+    private void transferAllWorkers(Store warehouse, Store transferWarehouse) {
+        List<Worker> existingWorkerList = warehouse.getWorkerList();
+        List<Worker> transferWorkerList = transferWarehouse.getWorkerList();
+
+        Iterator<Worker> iterator = existingWorkerList.iterator();
+        while(iterator.hasNext()) {
+            Worker existingworker = iterator.next();
+            existingworker.setStore(transferWarehouse);
+            transferWorkerList.add(existingworker);
+            iterator.remove();
         }
+        storeService.saveOrUpdate(warehouse);
+        storeService.saveOrUpdate(transferWarehouse);
     }
 
 }
