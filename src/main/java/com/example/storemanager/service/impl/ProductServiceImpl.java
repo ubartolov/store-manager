@@ -1,6 +1,7 @@
 package com.example.storemanager.service.impl;
 
 import com.example.storemanager.dao.ProductRepository;
+import com.example.storemanager.exception.AppException;
 import com.example.storemanager.model.Product;
 import com.example.storemanager.model.Store;
 import com.example.storemanager.model.StoreStock;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -18,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
 
     private StoreService storeService;
 
-    public ProductServiceImpl (ProductRepository productRepository, StoreService storeService) {
+    public ProductServiceImpl(ProductRepository productRepository, StoreService storeService) {
         this.productRepository = productRepository;
         this.storeService = storeService;
     }
@@ -30,6 +32,15 @@ public class ProductServiceImpl implements ProductService {
         return productsList;
     }
     @Override
+    public Product findByName(String product) {
+        Optional<Product> productResult = productRepository.findByProductName(product);
+        if (productResult.isPresent())
+            return productResult.get();
+        return null;
+    }
+
+
+    @Override
     public List<Product> findByProductNotIn(Long storeId) {
         Store store = storeService.findById(storeId);
         List<Long> productIdsAlreadyInStore = new ArrayList<>();
@@ -40,13 +51,11 @@ public class ProductServiceImpl implements ProductService {
         }
         if (productIdsAlreadyInStore.size() > 0) {
             optionalProducts = productRepository.findByProductIdNotIn(productIdsAlreadyInStore);
-            if (optionalProducts.isPresent())
+            if (optionalProducts.isPresent()) {
                 return optionalProducts.get();
-            // TODO throw exception
-            return null;
-        } else {
-            return findAll();
+            }
         }
+        return findAll();
     }
 
     @Override
@@ -75,6 +84,6 @@ public class ProductServiceImpl implements ProductService {
         if (optionalProduct.isPresent()) {
             return optionalProduct.get();
         }
-        return null;
+        throw new AppException(String.format("Product with the ID number '%d' cannot be found", productId));
     }
 }

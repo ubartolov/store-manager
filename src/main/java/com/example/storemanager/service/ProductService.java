@@ -9,6 +9,8 @@ public interface ProductService {
 
     List<Product> findAll();
 
+    Product findByName(String product);
+
     List<Product> findByProductNotIn(Long storeId);
 
     Product saveOrUpdate(Product product);

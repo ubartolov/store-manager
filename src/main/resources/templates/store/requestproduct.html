@@ -51,10 +51,9 @@
                 <td th:text="${info.productPrice}"></td>
                 <td class="dropdown dropdown-td">
                     <a class="btn btn-success dropdown-toggle dropdownMenuLink" href="#" type="button"
-                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{productstable.requestButton}">
-
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       th:text="#{productstable.requestButton}">
                     </a>
-
                     <div id="add-product-dropdown" class="dropdown-menu main-menu-dropdown"
                          aria-labelledby="dropdownMenuLink">
                         <form class="form-horizontal request-form">
@@ -73,7 +72,8 @@
 
                                 <div class="form-group quantity-div">
                                     <input type="hidden" class="currently-in-storage" value="">
-                                    <h6 class="quantity-label"></h6>
+                                    <label class="quantity-label" th:text="#{productstable.dropdown.inStorage}"></label>
+                                    <h6 class="quantity-text"></h6>
                                 </div>
 
                                 <div class="dropdown-divider"></div>
@@ -86,7 +86,7 @@
                                 <input type="hidden" th:value="${info.productName}" class="productNameInput">
                                 <br>
                                 <button type="button" class="btn btn-success submit-button"
-                                        th:text="#{productstable.dropdown.amount}"></button>
+                                        th:text="#{productstable.addtoproductlist}"></button>
                             </div>
                         </form>
                     </div>
@@ -98,13 +98,22 @@
         </table>
     </div>
     <div class="second-alignment-div">
-        <table class="table table-striped table-info requestListTable">
-            <tr>
+        <table class="table table-striped requestListTable" id="requestListTable">
+
+            <thead>
+            <tr class="table-primary">
                 <th th:text="#{productstable.productName}">Product Name</th>
                 <th th:text="#{productstable.quantity}">Quantity</th>
                 <th th:text="#{mainpage.warehouse}">Warehouse</th>
                 <th></th>
             </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            <tfoot>
+
+            </tfoot>
         </table>
 
         <br>

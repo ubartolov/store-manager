@@ -1,28 +1,29 @@
 package com.example.storemanager.controller;
 
-import com.example.storemanager.dto.StoreDto;
+import com.example.storemanager.exception.AppException;
 import com.example.storemanager.model.Store;
-import com.example.storemanager.service.impl.StoreServiceImpl;
-import com.example.storemanager.service.impl.StoreStockServiceImpl;
-import com.example.storemanager.service.impl.WorkerServiceImpl;
+import com.example.storemanager.service.StoreService;
+import com.example.storemanager.service.StoreStockService;
+import com.example.storemanager.service.WorkerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 @Controller
 public class WarehouseController {
 
-    public final StoreServiceImpl storeService;
-    public final StoreStockServiceImpl storeStockService;
-    public final WorkerServiceImpl workerService;
+    public final StoreService storeService;
+    public final StoreStockService storeStockService;
+    public final WorkerService workerService;
 
 
-    public WarehouseController(StoreServiceImpl storeService, StoreStockServiceImpl storeStockService, WorkerServiceImpl workerService) {
+    public WarehouseController(StoreService storeService, StoreStockService storeStockService, WorkerService workerService) {
         this.storeService = storeService;
         this.storeStockService = storeStockService;
         this.workerService = workerService;
@@ -30,7 +31,13 @@ public class WarehouseController {
 
     @RequestMapping(path = "/warehouse/warehousespage")
     public String getAllWarehouses(Model model) {
-        model.addAttribute("warehouses", storeService.findAllWarehouses());
+        try {
+            List<Store> warehouse = storeService.findAllWarehouses();
+            model.addAttribute("warehouses", warehouse);
+        } catch (AppException e) {
+            model.addAttribute("errorBox", e.getPrettyErrorMessage());
+        }
+
         return "warehouse/warehousespage";
     }
 
@@ -47,7 +54,7 @@ public class WarehouseController {
     @RequestMapping(path = "/warehouse/delete-store/{existingWarehouseId}/{warehouseId}", method = RequestMethod.PATCH)
     public ResponseEntity<?> deleteStore(@PathVariable(name = "existingWarehouseId") Long existingWarehouseId,
                                          @PathVariable(name = "warehouseId") Long warehouseId) {
-        storeStockService.returnProductAndDeleteWarehouse(existingWarehouseId, warehouseId);
+        storeStockService.deleteWarehouse(existingWarehouseId, warehouseId);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 

@@ -2,11 +2,18 @@ package com.example.storemanager.model;
 
 
 import com.example.storemanager.constants.StoreType;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +21,7 @@ import java.util.List;
 @Table(name = "STORE")
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@ToString
 public class Store {
 
     @Id
@@ -27,7 +35,8 @@ public class Store {
     @Column(name = "store_type")
     private StoreType storeType = StoreType.WAREHOUSE;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "store")
+    @Cascade(CascadeType.ALL)
     private List<StoreStock> storeStock = new ArrayList<>();
 
     @OneToMany(mappedBy = "store")

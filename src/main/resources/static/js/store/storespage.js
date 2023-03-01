@@ -23,7 +23,7 @@ $(document).ready(
         $('.delete-button').on('click', function () {
             var address = $(this).parent('.list-group-item').parent('.list-group').siblings('.storeInputAddress').val();
             var storeId = $(this).parent('.list-group-item').parent('.list-group').siblings('.storeInputId').val();
-
+            
             console.log(address);
             console.log(storeId);
 
@@ -40,11 +40,18 @@ $(document).ready(
                     }
                     var bodyText = address;
                     drawModal(headerText, bodyText, '/store/storespage');
-
+                    
                 },
                 error: function (e) {
+                    var headerText = "Error";
                     var response = JSON.parse(e.responseText);
-                    alert(response.prettyErrorMessage);
+                    if(langParam == "rs") {
+                        headerText = "Greška";
+                        var bodyText = "Radnja ne sme posedovati proizvode";
+                        drawModal(headerText ,bodyText, '/store/storespage');    
+                    } else {
+                        drawModal(headerText ,response.prettyErrorMessage, '/store/storespage');   
+                    }
                 }
             })
         });

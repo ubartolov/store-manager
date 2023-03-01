@@ -14,4 +14,7 @@ public class ErrorDto {
         this.exceptionMessage = exceptionMessage;
         this.prettyErrorMessage = prettyErrorMessage;
     }
+    public ErrorDto(String prettyErrorMessage) {
+        this.prettyErrorMessage = prettyErrorMessage;
+    }
 }

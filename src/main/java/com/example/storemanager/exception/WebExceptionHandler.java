@@ -20,6 +20,10 @@ public class WebExceptionHandler {
                         validationException.getPrettyErrorMessage());
                 return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
             }
+            if (runtimeException instanceof AppException appException) {
+                errorDto = new ErrorDto(appException.getPrettyErrorMessage());
+                return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+            }
             errorDto = new ErrorDto("unspecifiedError", "unspecifiedError",
                     "An unspecified error has occured");
             return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
