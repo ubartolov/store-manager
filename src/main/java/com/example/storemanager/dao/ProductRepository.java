@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
     Optional<List<Product>> findByProductIdNotIn(List<Long> products);
+
+    Optional<Product> findByProductName(String productName);
 }

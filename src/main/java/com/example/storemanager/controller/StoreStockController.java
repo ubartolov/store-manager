@@ -36,8 +36,8 @@ public class StoreStockController {
     @ResponseBody
     public Integer getProductQuantityForWarehouse(@PathVariable(name = "warehouseId") Long warehouseId,
                                                   @PathVariable(name = "productId") Long productId) {
-        StoreStock storeStock = storeStockServiceImpl.getStockForWarehouseAndProduct(warehouseId, productId);
-        return storeStock.getQuantity();
+        Integer storeStock = storeStockServiceImpl.getStockForWarehouseAndProduct(warehouseId, productId);
+        return storeStock;
     }
     @RequestMapping(path = "/storestock/reallocate-stock", method = RequestMethod.PATCH)
     @ResponseBody

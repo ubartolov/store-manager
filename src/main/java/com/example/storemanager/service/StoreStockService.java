@@ -21,9 +21,8 @@ public interface StoreStockService {
 
     void deleteProductFromStoreStock(DeleteProductDto deleteProductDto);
 
-    void returnProductToWarehouse(DeleteProductDto deleteProductDto);
 
-    StoreStock getStockForWarehouseAndProduct(Long warehouseId, Long productId);
+    Integer getStockForWarehouseAndProduct(Long warehouseId, Long productId);
 
     List<RequestProductDto> addNewProductToStoreList(List<RequestProductDto> requestProductDtoList);
 

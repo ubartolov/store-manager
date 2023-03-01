@@ -63,14 +63,21 @@ $(document).ready(
 
                     var quantityDiv = $(warehouseSelect).siblings('.quantity-div');
                     var quantityText = quantityDiv.children('.quantity-text');
-
+                    
                     if ($(quantityText).is(':empty')) {
-                        quantityText.append(data);
-                        quantityDiv.css('visibility', 'visible');
+                        
+                        if(+data == 0) {
+                            quantityText.append('Out of Stock')
+                        } else {
+                            quantityText.append(data);
+                        }
                     } else {
                         quantityText.text('');
-                        quantityText.append(data);
-                        quantityDiv.css('visibility', 'visible');
+                        if(+data == 0) {
+                            quantityText.append('Out of Stock')
+                        } else {
+                            quantityText.append(data);
+                        }
                     }
 
                     var inStorage = quantityDiv.children('.currently-in-storage');

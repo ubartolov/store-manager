@@ -65,7 +65,7 @@ $(document).ready(
                 success: function () {
                     var headerText = 'Successfully transfered ' + firstName + ' ' + lastName;
                     if(langParam = "rs") {
-                        headerText = "Uspešno prebačen " +  firstName + ' ' + lastName; 
+                        headerText = "Uspešno prebačen/a" +  firstName + ' ' + lastName; 
                     }
                     drawModal(headerText, storeAddress, "/worker/staffdetails");
                 },

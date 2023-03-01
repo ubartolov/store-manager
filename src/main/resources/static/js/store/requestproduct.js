@@ -6,12 +6,12 @@ $(document).ready(
 
         var langParam = Cookies.get("lang");
         var buttonText = "Select Desired Products";
-        if(langParam == "rs") {
-            buttonText = "Izaberite proizvode"
-        }
-    
+        if (langParam == "rs") {
+            buttonText = "Izaberite proizvode";
+        };
+
         $('.request-button').prop('disabled', true);
-        
+
         $('.navbar-text').css('visibility', "visible");
         $('.reference-button').css('visibility', "hidden");
         $('.navbar-text').append(buttonText);
@@ -19,8 +19,12 @@ $(document).ready(
         $(".dropdownMenuLink").click(function () {
             var submitButton = $('.submit-button');
             var insertAmount = $('.request-amount');
+            var quantityText = $('.quantity-text');
+
             submitButton.prop('disabled', true);
             insertAmount.prop('disabled', true);
+            quantityText.text('');
+            $('.request-form').trigger("reset");
 
         });
 
@@ -46,22 +50,41 @@ $(document).ready(
                     var availableQuantity = 0;
                     availableQuantity = +data;
 
-                    $("#requestListTable tr.table-detail-row").each(function () {
+                    $(".requestListTable tr.table-detail-row").each(function () {
                         var requestAmount = $(this).find(".requestAmountData").text();
                         var requestProductId = $(this).find("input.productIdData").val();
                         var requestWarehouseId = $(this).find("input.warehouseIdData").val();
 
-
                         if (+requestProductId == +productId && +requestWarehouseId == +warehouseId) {
                             availableQuantity = +availableQuantity - +requestAmount;
+                        };
+
+                    });
+
+                    var quantityText = quantityDiv.children('.quantity-text');
+                    if ($(quantityText).is(':empty')) {
+                        if (+availableQuantity == 0) {
+                            if (langParam == "rs") {
+                                quantityText.append('Nema u zalihama');
+                            } else {
+                                quantityText.append('Out of Stock');
+                            }
+                        } else {
+                            quantityText.append(availableQuantity);
                         }
-
-                    })
-
-                    quantityLabel.text('Currently in Storage: ' + availableQuantity);
-                    quantityDiv.css('visibility', 'visible');
+                    } else {
+                        quantityText.text('');
+                        if (+availableQuantity == 0) {
+                            if (langParam == "rs") {
+                                quantityText.append('Nema u zalihama');
+                            } else {
+                                quantityText.append('Out of Stock');
+                            }
+                        } else {
+                            quantityText.append(availableQuantity);
+                        }
+                    }
                     inStorage.val(availableQuantity);
-
                 },
                 error: function (e) {
                     console.log("ERROR : ", e);
@@ -76,7 +99,6 @@ $(document).ready(
             var sumbitButton = $(requestAmount).parent().siblings('.submit-button');
             var quantity = $(requestAmount).val();
             var currentlyInStorage = $(requestAmount).parent().siblings('.quantity-div').children('.currently-in-storage');
-
 
             if (+quantity > +$(currentlyInStorage).val() || +quantity <= 0) {
                 requestAmount.style.border = '3px solid #FF0000';
@@ -102,7 +124,7 @@ $(document).ready(
                     + '<td  class="productNameData" value="">' + productName + '</td>'
                     + '<td class="requestAmountData">' + requestAmount + '</td>'
                     + '<td>' + warehouseAddress + '</td>'
-                    + '<td><button type="button" class="btn btn-success remove-button">Remove</button></td>'
+                    + '<td><button type="button" class="btn btn-danger remove-button">Remove</button></td>'
                     + '<input type="hidden" class="warehouseIdData" value="' + warehouseId + '">'
                     + '<input type="hidden" class="productIdData" value="' + productId + '">'
                     + '</tr>'
@@ -110,10 +132,9 @@ $(document).ready(
                 $('.requestListTable').append(tableRow);
                 $('.request-button').prop('disabled', false);
 
-                $(this).siblings('.quantity-div').children('.quantity-label').text('');
                 $('.request-form').trigger("reset");
             } else {
-                alert('Insert Amount Must Be Higher Than 0');
+                alert('Insert amount must be higher than 0');
             }
 
         });
@@ -122,8 +143,7 @@ $(document).ready(
         $('.request-button').on('click', function () {
             var button = this;
             var storeId = $('#storeIdInput').val();
-            var link = $('#link-back').val
-            
+
             var requestList = [];
 
             $(".requestListTable tr.table-detail-row").each(function () {
@@ -145,7 +165,7 @@ $(document).ready(
             var bodyAsJson = JSON.stringify(requestList);
 
             $.ajax({
-                type:'POST',
+                type: 'POST',
                 contentType: 'application/json',
                 url: "/storestock/store-new-product",
                 data: bodyAsJson,
@@ -154,10 +174,10 @@ $(document).ready(
                 timeout: 50000,
                 success: function (data) {
                     var headerText = 'Successfully added'
-                    if(langParam == "rs") {
+                    if (langParam == "rs") {
                         headerText = "Uspešno dodat"
                     }
-                   drawModalWithRetrurnedData(headerText, data, "/store/storedetails/" + storeId);
+                    drawModalWithRetrurnedData(headerText, data, "/store/storedetails/" + storeId);
 
                 },
                 error: function (e) {
@@ -168,8 +188,14 @@ $(document).ready(
 
         });
         $('.requestListTable').on('click', '.remove-button', function () {
-            $(this).parent().parent().remove();
 
+            var table = $(this);
+            $(table).parent().parent().remove();
+            var count = document.getElementById("requestListTable").getElementsByTagName("tr").length
+            
+            if(count == 1) {
+                $('.request-button').prop('disabled', true);
+            }
         });
 
         dataTableWithLocale('#main-table', langParam);

@@ -2,6 +2,7 @@ package com.example.storemanager.service.impl;
 
 import com.example.storemanager.dao.WorkerRepository;
 import com.example.storemanager.dto.WorkerInfoDto;
+import com.example.storemanager.exception.AppException;
 import com.example.storemanager.model.Position;
 import com.example.storemanager.model.Store;
 import com.example.storemanager.model.Worker;
@@ -38,7 +39,7 @@ public class WorkerServiceImpl implements WorkerService {
         if (optionalWorker.isPresent()) {
             return optionalWorker.get();
         }
-        return null;
+        throw new AppException(String.format("Worker with the given ID does not exist", id));
     }
 
     @Override
@@ -108,7 +109,6 @@ public class WorkerServiceImpl implements WorkerService {
             worker.setStore(store);
             saveOrUpdate(worker);
         }
-
     }
 
     @Override
@@ -122,7 +122,6 @@ public class WorkerServiceImpl implements WorkerService {
         if (worker.getWorkerId() != null) {
             delete(worker);
         }
-        // throw exception
     }
     @Override
     public List<WorkerInfoDto> getAllWorkerDetails() {

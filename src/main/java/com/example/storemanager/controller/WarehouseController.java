@@ -1,5 +1,6 @@
 package com.example.storemanager.controller;
 
+import com.example.storemanager.exception.AppException;
 import com.example.storemanager.model.Store;
 import com.example.storemanager.service.StoreService;
 import com.example.storemanager.service.StoreStockService;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 @Controller
 public class WarehouseController {
@@ -28,7 +31,13 @@ public class WarehouseController {
 
     @RequestMapping(path = "/warehouse/warehousespage")
     public String getAllWarehouses(Model model) {
-        model.addAttribute("warehouses", storeService.findAllWarehouses());
+        try {
+            List<Store> warehouse = storeService.findAllWarehouses();
+            model.addAttribute("warehouses", warehouse);
+        } catch (AppException e) {
+            model.addAttribute("errorBox", e.getPrettyErrorMessage());
+        }
+
         return "warehouse/warehousespage";
     }
 

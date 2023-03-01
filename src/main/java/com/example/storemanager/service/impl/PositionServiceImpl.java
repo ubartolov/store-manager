@@ -1,6 +1,7 @@
 package com.example.storemanager.service.impl;
 
 import com.example.storemanager.dao.PositionRepository;
+import com.example.storemanager.exception.AppException;
 import com.example.storemanager.model.Position;
 import com.example.storemanager.service.PositionService;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class PositionServiceImpl implements PositionService {
         if (optionalPosition.isPresent()) {
             return optionalPosition.get();
         }
-        return null;
+        throw new AppException("Position id does not exist");
     }
 
     @Override

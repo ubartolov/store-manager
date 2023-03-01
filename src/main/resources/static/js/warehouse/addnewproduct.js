@@ -53,7 +53,13 @@ $(document).ready(
 
         });
         $('#requestListTable').on('click', '.remove-button', function () {
-            $(this).parent().parent().remove();
+            var table = $(this);
+            $(table).parent().parent().remove();
+            
+            var tableSize = $(table).find("td").length;
+            if (tableSize == 0) {
+                $('.request-button').prop('disabled', true);
+            }
 
         });
 
@@ -94,9 +100,9 @@ $(document).ready(
                 cache: false,
                 timeout: 50000,
                 success: function (data) {
-                    var headerText = 'Successfully added new products';
+                    var headerText = 'Successfully added';
                     if(langParam == "rs") {
-                        headerText = "Uspešno dodat nov proizvod"
+                        headerText = "Uspešno dodat"
                     }
                     drawModalWithRetrurnedData(headerText, data, "/warehouse/warehousedetails/" + warehouseId)
                 },

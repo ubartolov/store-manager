@@ -97,9 +97,9 @@ $(document).ready(
                 cache: false,
                 timeout: 60000,
                 success: function(data) {
-                    var headerText = 'Successfully deleted a product';
+                    var headerText = 'Successfully deleted a product from the warehouse';
                     if(langParam == "rs") {
-                        headerText = "Uspešno obrisan proizvod"    
+                        headerText = "Uspešno obrisan proizvod iz magacina"    
                     }
                     var bodyText = productName;
                     drawModal(headerText, bodyText, '/warehouse/warehousedetails/' + warehouseId);

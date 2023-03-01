@@ -40,6 +40,5 @@ public class Store {
     private List<StoreStock> storeStock = new ArrayList<>();
 
     @OneToMany(mappedBy = "store")
-    /*@Cascade(CascadeType.ALL)*/
     private List<Worker> workerList = new ArrayList<>();
 }

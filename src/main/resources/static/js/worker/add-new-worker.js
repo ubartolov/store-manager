@@ -96,7 +96,7 @@ $(document).ready(
                     timeout: 50000,
                     success: function () {
                         var headerText = 'Successfully edited a worker';
-                        if(langParam = "rs") {
+                        if(langParam == "rs") {
                             headerText = "Uspešno izmenjen radnik"
                         }
                         drawModal(headerText, fullName, "/worker/staffdetails")
@@ -118,7 +118,7 @@ $(document).ready(
                     timeout: 50000,
                     success: function () {
                         var headerText = 'Successfully added a new worker';
-                        if(langParam = "rs") {
+                        if(langParam == "rs") {
                             headerText = "Uspešno dodat nov radnik"
                         }
                         drawModal(headerText, fullName, "/worker/staffdetails")
