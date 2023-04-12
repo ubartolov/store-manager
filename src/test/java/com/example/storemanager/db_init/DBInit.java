@@ -177,9 +177,18 @@ public class DBInit {
         positionRepository.save(position);
 
         Position position1 = new Position();
-        position1.setPositionName("F&B Manager");
+        position1.setPositionName("CTO");
         position1.setSalary(95000);
         positionRepository.save(position1);
+
+        Position position2 = new Position();
+        position2.setPositionName("CEO");
+        position2.setSalary(75000);
+        positionRepository.save(position2);
+
+        Position position3 = new Position();
+        position3.setPositionName("Salesperson");
+        position3.setSalary(65000);
 
         Worker worker = new Worker();
         worker.setFirstName("Peter");

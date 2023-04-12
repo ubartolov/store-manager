@@ -17,6 +17,7 @@ import org.hibernate.annotations.CascadeType;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 @Table(name = "STORE")
 @Data
@@ -35,10 +36,36 @@ public class Store {
     @Column(name = "store_type")
     private StoreType storeType = StoreType.WAREHOUSE;
 
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", orphanRemoval = true)
     @Cascade(CascadeType.ALL)
     private List<StoreStock> storeStock = new ArrayList<>();
 
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", orphanRemoval = true)
+    @Cascade(CascadeType.ALL)
     private List<Worker> workerList = new ArrayList<>();
+
+    public Store addStoreStock(StoreStock storeStock) {
+        this.storeStock.add(storeStock);
+        storeStock.setStore(this);
+        return this;
+    }
+
+    public Store removeStoreStock(StoreStock storeStock) {
+        this.storeStock.remove(storeStock);
+        storeStock.setStore(null);
+        return this;
+    }
+
+    public Store addWorkerList(Worker worker) {
+        this.workerList.add(worker);
+        worker.setStore(this);
+        return this;
+    }
+
+    public Store removeWorker(Worker worker) {
+        this.workerList.remove(worker);
+        worker.setStore(null);
+        return this;
+    }
 }
+

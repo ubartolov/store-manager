@@ -1,9 +1,7 @@
 package com.example.storemanager.controller;
 
 import com.example.storemanager.dto.StoreDto;
-import com.example.storemanager.exception.AppException;
 import com.example.storemanager.model.Store;
-import com.example.storemanager.service.ProductService;
 import com.example.storemanager.service.StoreService;
 import com.example.storemanager.service.StoreStockService;
 import com.example.storemanager.service.WorkerService;
@@ -24,6 +22,7 @@ public class StoreController {
     private final StoreService storeService;
     private final StoreStockService storeStockService;
     private final WorkerService workerService;
+
     public StoreController(StoreService storeService, StoreStockService storeStockService, WorkerService workerService) {
         this.storeService = storeService;
         this.storeStockService = storeStockService;
@@ -33,16 +32,12 @@ public class StoreController {
 
     @RequestMapping("/store/storespage")
     public String getAllStores(Model model) {
-        try {
-            List<Store> storeList = storeService.findAllStores();
-            model.addAttribute("stores", storeList);
-        } catch (AppException e) {
-            model.addAttribute("errorBox", e.getPrettyErrorMessage());
-        }
+        List<Store> storeList = storeService.findAllStores();
+        model.addAttribute("stores", storeList);
         return "store/storespage";
     }
 
-    @RequestMapping("store/storedetails/{id}")
+    @RequestMapping("/store/storedetails/{id}")
     public String getDetails(@PathVariable(name = "id") Long storeId, Model model) {
         model.addAttribute("storeStock", storeStockService.getDetailsById(storeId));
         model.addAttribute("warehouses", storeService.findAllWarehouses());
@@ -54,14 +49,14 @@ public class StoreController {
     }
 
     @RequestMapping(path = "/common/new-store/{origin}")
-    public String newStore (@PathVariable(name = "origin")String origin, Model model) {
+    public String newStore(@PathVariable(name = "origin") String origin, Model model) {
         String returnTo = origin.equals("storespage") ? "/store/storespage" : "/warehouse/warehousespage";
         model.addAttribute("origin", returnTo);
         return "common/new-store";
     }
 
     @RequestMapping(path = "/common/new-store/{origin}/{storeId}")
-    public String editStore (@PathVariable(name = "storeId")Long id, @PathVariable(name = "origin") String origin, Model model) {
+    public String editStore(@PathVariable(name = "storeId") Long id, @PathVariable(name = "origin") String origin, Model model) {
         String returnTo = origin.equals("storespage") ? "/store/storespage" : "/warehouse/warehousespage";
         model.addAttribute("storeId", id);
         model.addAttribute("origin", returnTo);
@@ -70,20 +65,20 @@ public class StoreController {
 
 
     @RequestMapping(path = "/store/add-new-store", method = RequestMethod.POST)
-    public ResponseEntity<?> addingNewStore (@RequestBody StoreDto storeDto) {
+    public ResponseEntity<?> addingNewStore(@RequestBody StoreDto storeDto) {
         storeService.addOrUpdateStore(storeDto);
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(path = "/store/edit-store/{storeId}", method = RequestMethod.GET)
-    public ResponseEntity<?> editingStore (@PathVariable(name = "storeId") Long id) {
+    public ResponseEntity<?> editingStore(@PathVariable(name = "storeId") Long id) {
         StoreDto storeDto = storeService.findByIdDto(id);
-        return new ResponseEntity<>(storeDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(storeDto, HttpStatus.OK);
     }
-    
+
     @RequestMapping(path = "/delete-store/{storeId}", method = RequestMethod.PATCH)
     public ResponseEntity<?> deleteStore(@PathVariable(name = "storeId") Long id) {
         storeService.deleteById(id);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

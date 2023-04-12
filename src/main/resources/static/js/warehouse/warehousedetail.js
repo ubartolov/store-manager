@@ -89,7 +89,7 @@ $(document).ready(
             var bodyAsJson = JSON.stringify(body);
 
             $.ajax({
-                type:'PATCH',
+                type:'DELETE',
                 contentType: 'application/json',
                 url: "/storestock/delete-product-warehouse",
                 data: bodyAsJson,

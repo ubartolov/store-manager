@@ -21,4 +21,15 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<StoreStock> storeStock = new ArrayList<>();
 
+    public Product addStoreStock(StoreStock storeStock) {
+        this.storeStock.add(storeStock);
+        storeStock.setProduct(this);
+        return this;
+    }
+
+    public Product removeStoreStock(StoreStock storeStock) {
+        this.storeStock.remove(storeStock);
+        storeStock.setProduct(null);
+        return this;
+    }
 }

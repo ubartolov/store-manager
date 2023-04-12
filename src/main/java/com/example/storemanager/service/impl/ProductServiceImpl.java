@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> productResult = productRepository.findByProductName(product);
         if (productResult.isPresent())
             return productResult.get();
-        return null;
+        throw new AppException("Product with the given name does not exist");
     }
 
 

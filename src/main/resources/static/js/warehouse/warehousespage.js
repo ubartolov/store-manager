@@ -6,7 +6,7 @@ $(document).ready(
         var buttonText = "Add New Warehouse";
         var langParam = Cookies.get("lang");
         if (langParam == "rs") {
-            buttonText = "Dodaj Magacin";
+            buttonText = "Dodaj Nov Magacin";
         }
 
         $('.reference-button').append(buttonText);
@@ -34,7 +34,7 @@ $(document).ready(
                 cache: false,
                 timeout: 60000,
                 success: function () {
-                    var headerText = "Successfully returned all products and removed a warehouse";
+                    var headerText = "Successfully returned all products and removed a Warehouse";
                     if(langParam == "rs") {
                         headerText = "Uspešno vraćeni svi proizvodi i obrisan Magacin";
                     }

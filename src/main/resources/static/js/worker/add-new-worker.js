@@ -97,9 +97,9 @@ $(document).ready(
                     success: function () {
                         var headerText = 'Successfully edited a worker';
                         if(langParam == "rs") {
-                            headerText = "Uspešno izmenjen radnik"
+                            headerText = "Uspešno izmenjen radnik";
                         }
-                        drawModal(headerText, fullName, "/worker/staffdetails")
+                        drawModal(headerText, fullName, "/worker/staffdetails");
                     },
                     error: function (e) {
                         var response = JSON.parse(e.responseText);
