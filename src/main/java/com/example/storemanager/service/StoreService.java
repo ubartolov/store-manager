@@ -14,7 +14,7 @@ public interface StoreService {
 
     Store saveOrUpdate(Store store);
 
-    void addOrUpdateStore (StoreDto storeDto);
+    Store addOrUpdateStore (StoreDto storeDto);
 
     void delete(Store store);
 

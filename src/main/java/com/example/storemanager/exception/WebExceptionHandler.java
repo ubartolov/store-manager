@@ -29,7 +29,7 @@ public class WebExceptionHandler {
             return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
             return new ResponseEntity<>(new ErrorDto("request.genericError",
-                    "requestGenericError", "An unexpected error has occured"),
+                    "requestGenericError", "An unexpected error has occured: " + e.getMessage()),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

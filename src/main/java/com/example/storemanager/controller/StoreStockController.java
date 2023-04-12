@@ -5,10 +5,9 @@ import com.example.storemanager.dto.DeleteProductDto;
 import com.example.storemanager.dto.RequestProductDto;
 import com.example.storemanager.dto.RequestProductWarehouseDto;
 import com.example.storemanager.dto.UpdateProductDto;
-import com.example.storemanager.model.StoreStock;
-import com.example.storemanager.service.impl.ProductServiceImpl;
-import com.example.storemanager.service.impl.StoreServiceImpl;
-import com.example.storemanager.service.impl.StoreStockServiceImpl;
+import com.example.storemanager.service.ProductService;
+import com.example.storemanager.service.StoreService;
+import com.example.storemanager.service.StoreStockService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,13 +19,13 @@ import java.util.List;
 @Controller
 public class StoreStockController {
 
-    private final StoreStockServiceImpl storeStockServiceImpl;
-    private final ProductServiceImpl productServiceImpl;
-    private final StoreServiceImpl storeServiceImpl;
+    private final StoreStockService storeStockServiceImpl;
+    private final ProductService productServiceImpl;
+    private final StoreService storeServiceImpl;
 
-    public StoreStockController (StoreStockServiceImpl storeStockServiceImpl,
+    public StoreStockController (StoreStockService storeStockServiceImpl,
                                  StoreStockRepository storeStockRepository,
-                                 ProductServiceImpl productServiceImpl, StoreServiceImpl storeServiceImpl) {
+                                 ProductService productServiceImpl, StoreService storeServiceImpl) {
         this.storeStockServiceImpl = storeStockServiceImpl;
         this.productServiceImpl = productServiceImpl;
         this.storeServiceImpl = storeServiceImpl;
@@ -43,7 +42,7 @@ public class StoreStockController {
     @ResponseBody
     public ResponseEntity<?> addProductToStore(@RequestBody RequestProductDto requestProductDto) {
         storeStockServiceImpl.addQuantityFromWarehouse(requestProductDto);
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(path = "/store/requestproduct/{storeId}")
@@ -64,7 +63,7 @@ public class StoreStockController {
     @RequestMapping(path = "/storestock/update-warehouse-stock", method = RequestMethod.PATCH)
     public ResponseEntity<?> updateProductInWarehouse(@RequestBody UpdateProductDto updateProductDto) {
         storeStockServiceImpl.updateProductQuantity(updateProductDto);
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(path = "/warehouse/addnewproduct/{warehouseId}")
@@ -78,7 +77,7 @@ public class StoreStockController {
         List<RequestProductWarehouseDto> result = storeStockServiceImpl.addNewProductToWarehouseList(warehouseDtoList);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-    @RequestMapping(path = "/storestock/delete-product-warehouse", method = RequestMethod.PATCH)
+    @RequestMapping(path = "/storestock/delete-product-warehouse", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteProductFromWarehouse(@RequestBody DeleteProductDto deleteProductDto) {
         storeStockServiceImpl.deleteProductFromStoreStock(deleteProductDto);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);

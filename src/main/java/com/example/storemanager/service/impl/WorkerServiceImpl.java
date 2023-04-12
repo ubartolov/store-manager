@@ -6,6 +6,8 @@ import com.example.storemanager.exception.AppException;
 import com.example.storemanager.model.Position;
 import com.example.storemanager.model.Store;
 import com.example.storemanager.model.Worker;
+import com.example.storemanager.service.PositionService;
+import com.example.storemanager.service.StoreService;
 import com.example.storemanager.service.WorkerService;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,10 @@ import java.util.Optional;
 public class WorkerServiceImpl implements WorkerService {
 
     private WorkerRepository workerRepository;
-    private StoreServiceImpl storeService;
-    private PositionServiceImpl positionService;
+    private StoreService storeService;
+    private PositionService positionService;
 
-    public WorkerServiceImpl(WorkerRepository workerRepository, StoreServiceImpl storeService, PositionServiceImpl positionService) {
+    public WorkerServiceImpl(WorkerRepository workerRepository, StoreService storeService, PositionService positionService) {
         this.workerRepository = workerRepository;
         this.storeService = storeService;
         this.positionService = positionService;
@@ -39,7 +41,7 @@ public class WorkerServiceImpl implements WorkerService {
         if (optionalWorker.isPresent()) {
             return optionalWorker.get();
         }
-        throw new AppException(String.format("Worker with the given ID does not exist", id));
+        throw new AppException(String.format("Worker with the given '%d' does not exist", id));
     }
 
     @Override
@@ -82,7 +84,7 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
-    public void addOrUpdateNewWorker(WorkerInfoDto workerInfoDto) {
+    public Worker addOrUpdateNewWorker(WorkerInfoDto workerInfoDto) {
         Position position = positionService.findById(workerInfoDto.getPositionId());
         Store store = storeService.findById(workerInfoDto.getStoreId());
         Worker worker;
@@ -97,18 +99,16 @@ public class WorkerServiceImpl implements WorkerService {
         worker.setHomeAddress(workerInfoDto.getHomeAddress());
         worker.setPosition(position);
         worker.setStore(store);
-        saveOrUpdate(worker);
+        return saveOrUpdate(worker);
     }
 
     @Override
     public void transferWorker(WorkerInfoDto workerInfoDto) {
         Store store = storeService.findById(workerInfoDto.getStoreId());
-        Worker worker;
-        if (workerInfoDto.getWorkerId() != null) {
-            worker = findById(workerInfoDto.getWorkerId());
-            worker.setStore(store);
-            saveOrUpdate(worker);
-        }
+        Worker worker = findById(workerInfoDto.getWorkerId());
+
+        worker.setStore(store);
+        saveOrUpdate(worker);
     }
 
     @Override
@@ -123,6 +123,7 @@ public class WorkerServiceImpl implements WorkerService {
             delete(worker);
         }
     }
+
     @Override
     public List<WorkerInfoDto> getAllWorkerDetails() {
         List<WorkerInfoDto> list = new ArrayList<>();

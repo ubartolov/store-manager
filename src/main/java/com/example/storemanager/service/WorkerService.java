@@ -17,7 +17,7 @@ public interface WorkerService {
     Worker saveOrUpdate(Worker worker);
 
 
-    void addOrUpdateNewWorker(WorkerInfoDto workerInfoDto);
+    Worker addOrUpdateNewWorker(WorkerInfoDto workerInfoDto);
 
     void transferWorker(WorkerInfoDto workerInfoDto);
 

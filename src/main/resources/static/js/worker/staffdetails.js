@@ -64,8 +64,8 @@ $(document).ready(
                 timeout: 50000,
                 success: function () {
                     var headerText = 'Successfully transfered ' + firstName + ' ' + lastName;
-                    if(langParam = "rs") {
-                        headerText = "Uspešno prebačen/a" +  firstName + ' ' + lastName; 
+                    if(langParam == "rs") {
+                        headerText = "Uspešno prebačen/a " +  firstName + ' ' + lastName; 
                     }
                     drawModal(headerText, storeAddress, "/worker/staffdetails");
                 },
@@ -85,7 +85,7 @@ $(document).ready(
             
             console.log(workerId);
             $.ajax({
-                type: 'PATCH',
+                type: 'DELETE',
                 contentType: 'application/json',
                 url: "/worker/delete-worker/" + workerId,
                 cache: false,

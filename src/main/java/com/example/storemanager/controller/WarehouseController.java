@@ -31,31 +31,26 @@ public class WarehouseController {
 
     @RequestMapping(path = "/warehouse/warehousespage")
     public String getAllWarehouses(Model model) {
-        try {
             List<Store> warehouse = storeService.findAllWarehouses();
             model.addAttribute("warehouses", warehouse);
-        } catch (AppException e) {
-            model.addAttribute("errorBox", e.getPrettyErrorMessage());
-        }
-
-        return "warehouse/warehousespage";
+        return "/warehouse/warehousespage";
     }
 
-    @RequestMapping(path = "warehouse/warehousedetails/{warehouseId}")
+    @RequestMapping(path = "/warehouse/warehousedetails/{warehouseId}")
     public String getWarehouseDetails(@PathVariable Long warehouseId, Model model) {
         model.addAttribute("storeStock", storeStockService.getDetailsById(warehouseId));
         Store store = storeService.findById(warehouseId);
         model.addAttribute("warehouseId", store.getStoreId());
         model.addAttribute("warehouseAddress", store.getAddress());
         model.addAttribute("workers", workerService.getWorkerDetailsById(warehouseId));
-        return "warehouse/warehousedetails";
+        return "/warehouse/warehousedetails";
     }
 
     @RequestMapping(path = "/warehouse/delete-store/{existingWarehouseId}/{warehouseId}", method = RequestMethod.PATCH)
     public ResponseEntity<?> deleteStore(@PathVariable(name = "existingWarehouseId") Long existingWarehouseId,
                                          @PathVariable(name = "warehouseId") Long warehouseId) {
         storeStockService.deleteWarehouse(existingWarehouseId, warehouseId);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

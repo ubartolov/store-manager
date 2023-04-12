@@ -1,11 +1,9 @@
 package com.example.storemanager.controller;
 
 import com.example.storemanager.dto.WorkerInfoDto;
-import com.example.storemanager.model.Store;
-import com.example.storemanager.model.Worker;
-import com.example.storemanager.service.impl.PositionServiceImpl;
-import com.example.storemanager.service.impl.StoreServiceImpl;
-import com.example.storemanager.service.impl.WorkerServiceImpl;
+import com.example.storemanager.service.PositionService;
+import com.example.storemanager.service.StoreService;
+import com.example.storemanager.service.WorkerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,16 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
-
 @Controller
 public class WorkerController {
 
-    private final WorkerServiceImpl workerService;
-    private final PositionServiceImpl positionService;
-    private final StoreServiceImpl storeService;
+    private final WorkerService workerService;
+    private final PositionService positionService;
+    private final StoreService storeService;
 
-    public WorkerController(WorkerServiceImpl workerService, PositionServiceImpl positionService, StoreServiceImpl storeService) {
+    public WorkerController(WorkerService workerService, PositionService positionService, StoreService storeService) {
         this.workerService = workerService;
         this.positionService = positionService;
         this.storeService = storeService;
@@ -62,7 +58,7 @@ public class WorkerController {
         model.addAttribute("stores", storeService.findAll());
         return "/worker/add-new-worker";
     }
-    @RequestMapping(path = "/worker/delete-worker/{workerId}", method = RequestMethod.PATCH)
+    @RequestMapping(path = "/worker/delete-worker/{workerId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteWorker(@PathVariable(name = "workerId") Long workerId) {
         workerService.deleteById(workerId);
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
