@@ -30,14 +30,14 @@ public class WorkerController {
     public String getAllWorkers(Model model) {
         model.addAttribute("workers", workerService.getAllWorkerDetails());
         model.addAttribute("stores", storeService.findAll());
-        return "/worker/staffdetails";
+        return "worker/staffdetails";
     }
 
     @RequestMapping(path = "/worker/add-new-worker")
     public String newWorkerPage(Model model){
         model.addAttribute("positions", positionService.findAll());
         model.addAttribute("stores", storeService.findAll());
-        return "/worker/add-new-worker";
+        return "worker/add-new-worker";
     }
 
     @RequestMapping(path = "/worker/new-worker", method = RequestMethod.POST)
@@ -56,7 +56,7 @@ public class WorkerController {
         model.addAttribute("workerId", workerId);
         model.addAttribute("positions", positionService.findAll());
         model.addAttribute("stores", storeService.findAll());
-        return "/worker/add-new-worker";
+        return "worker/add-new-worker";
     }
     @RequestMapping(path = "/worker/delete-worker/{workerId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteWorker(@PathVariable(name = "workerId") Long workerId) {

@@ -41,7 +41,7 @@ public class WorkerServiceImpl implements WorkerService {
         if (optionalWorker.isPresent()) {
             return optionalWorker.get();
         }
-        throw new AppException(String.format("Worker with the given '%d' does not exist", id));
+        throw new AppException(String.format("Worker with ID '%d' does not exist", id));
     }
 
     @Override

@@ -52,7 +52,7 @@ public class WarehouseControllerTest {
         mockMvc.perform(get("/warehouse/warehousespage"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("/warehouse/warehousespage"));
+                .andExpect(view().name("warehouse/warehousespage"));
         verify(storeService, atMostOnce()).findAllWarehouses();
     }
 
@@ -90,7 +90,7 @@ public class WarehouseControllerTest {
         mockMvc.perform(get("/warehouse/warehousedetails/" + warehouse.getStoreId()))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("/warehouse/warehousedetails"))
+                .andExpect(view().name("warehouse/warehousedetails"))
                 .andExpect(model().attribute("storeStock", equalTo(List.of(storeStockDto))));
         verify(storeService, atMostOnce()).findById(warehouse.getStoreId());
         verify(storeService, atMostOnce()).findAllWarehouses();

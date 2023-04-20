@@ -31,8 +31,8 @@ public class DBInit {
     @Autowired
     private PositionRepository positionRepository;
 
-
-    @Test
+// Uncomment when you want to initialize a clean DB
+//    @Test
     public void initDatabase() {
 
         Store store1 = new Store();
@@ -130,18 +130,6 @@ public class DBInit {
         storeStock10.setQuantity(900);
         storeStockRepository.save(storeStock10);
 
-//    StoreStock storeStock11 = new StoreStock();
-//    storeStock11.setProduct(product3);
-//    storeStock11.setStore(store2);
-//    storeStock11.setQuantity(10);
-//    storeStockRepository.save(storeStock11);
-//
-//    StoreStock storeStock12 = new StoreStock();
-//    storeStock12.setProduct(product3);
-//    storeStock12.setStore(warehouse2);
-//    storeStock12.setQuantity(600);
-//    storeStockRepository.save(storeStock12);
-
         Product product4 = new Product();
         product4.setProductName("Red Dead Redemption II");
         product4.setProductPrice(60);
@@ -153,11 +141,6 @@ public class DBInit {
         storeStock13.setQuantity(50);
         storeStockRepository.save(storeStock13);
 
-//    StoreStock storeStock14 = new StoreStock();
-//    storeStock14.setProduct(product4);
-//    storeStock14.setStore(warehouse1);
-//    storeStock14.setQuantity(900);
-//    storeStockRepository.save(storeStock14);
 
         StoreStock storeStock15 = new StoreStock();
         storeStock15.setProduct(product4);
@@ -172,23 +155,29 @@ public class DBInit {
         storeStockRepository.save(storeStock16);
 
         Position position = new Position();
-        position.setPositionName("Manager");
+        position.setPositionName("Administrative Assistant");
         position.setSalary(85000);
         positionRepository.save(position);
 
         Position position1 = new Position();
-        position1.setPositionName("CTO");
+        position1.setPositionName("Executive Assistant");
         position1.setSalary(95000);
         positionRepository.save(position1);
 
         Position position2 = new Position();
-        position2.setPositionName("CEO");
+        position2.setPositionName("Marketing Manager");
         position2.setSalary(75000);
         positionRepository.save(position2);
 
         Position position3 = new Position();
-        position3.setPositionName("Salesperson");
+        position3.setPositionName("Sales Manager");
         position3.setSalary(65000);
+        positionRepository.save(position3);
+
+        Position position4 = new Position();
+        position4.setPositionName("Office Assistant");
+        position4.setSalary(45000);
+        positionRepository.save(position4);
 
         Worker worker = new Worker();
         worker.setFirstName("Peter");

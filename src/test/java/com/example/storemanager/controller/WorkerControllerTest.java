@@ -76,7 +76,7 @@ public class WorkerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("workers", equalTo(List.of(workerInfoDto))))
                 .andExpect(model().attribute("stores", equalTo(allStores)))
-                .andExpect(view().name("/worker/staffdetails"));
+                .andExpect(view().name("worker/staffdetails"));
         verify(workerService, atMostOnce()).getAllWorkerDetails();
         verify(storeService, atMostOnce()).findAll();
     }
@@ -98,7 +98,7 @@ public class WorkerControllerTest {
                 .andDo(print())
                 .andExpect(model().attribute("positions", equalTo(List.of(position))))
                 .andExpect(model().attribute("stores", equalTo(storeList)))
-                .andExpect(view().name("/worker/add-new-worker"));
+                .andExpect(view().name("worker/add-new-worker"));
 
         verify(positionService, atMostOnce()).findAll();
         verify(storeService, atMostOnce()).findAll();
@@ -166,7 +166,7 @@ public class WorkerControllerTest {
                 .andExpect(model().attribute("workerId", equalTo(worker.getWorkerId())))
                 .andExpect(model().attribute("stores", equalTo(List.of(store))))
                 .andExpect(model().attribute("positions", equalTo(List.of(position))))
-                .andExpect(view().name("/worker/add-new-worker"));
+                .andExpect(view().name("worker/add-new-worker"));
         verify(storeService, atMostOnce()).findAll();
         verify(positionService, atMostOnce()).findAll();
     }
