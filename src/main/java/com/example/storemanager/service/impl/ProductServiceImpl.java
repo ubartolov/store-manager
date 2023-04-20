@@ -34,9 +34,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findByName(String product) {
         Optional<Product> productResult = productRepository.findByProductName(product);
-        if (productResult.isPresent())
-            return productResult.get();
-        throw new AppException("Product with the given name does not exist");
+        return productResult.orElse(null);
     }
 
 

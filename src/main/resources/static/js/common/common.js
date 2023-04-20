@@ -40,16 +40,7 @@ function localeSelect() {
     var select = $('#locales');
 
     var langParam = Cookies.get("lang");
-    var currentLang = "";
-    console.log(langParam);
-    if (langParam == "us") {
-        currentLang = "us";
-    }
-    if (langParam == "rs") {
-        currentLang = "rs";
-    }
-    console.log(langParam);
-    select.val(currentLang).attr('selected', true);
+    select.val(langParam).attr('selected', true);
 
     $("#locales").change(function () {
         var selectedOption = select.val();

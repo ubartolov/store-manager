@@ -33,7 +33,7 @@ public class WarehouseController {
     public String getAllWarehouses(Model model) {
             List<Store> warehouse = storeService.findAllWarehouses();
             model.addAttribute("warehouses", warehouse);
-        return "/warehouse/warehousespage";
+        return "warehouse/warehousespage";
     }
 
     @RequestMapping(path = "/warehouse/warehousedetails/{warehouseId}")
@@ -43,7 +43,7 @@ public class WarehouseController {
         model.addAttribute("warehouseId", store.getStoreId());
         model.addAttribute("warehouseAddress", store.getAddress());
         model.addAttribute("workers", workerService.getWorkerDetailsById(warehouseId));
-        return "/warehouse/warehousedetails";
+        return "warehouse/warehousedetails";
     }
 
     @RequestMapping(path = "/warehouse/delete-store/{existingWarehouseId}/{warehouseId}", method = RequestMethod.PATCH)

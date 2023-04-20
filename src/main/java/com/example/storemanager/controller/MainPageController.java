@@ -8,13 +8,11 @@ public class MainPageController {
 
     @RequestMapping("/")
     public String mainPage() {
-
         return "mainpage";
     }
 
     @RequestMapping("/warehousespage")
     public String warehousePage() {
-
         return "warehousespage";
     }
 }

@@ -48,7 +48,7 @@ public class WorkerServiceIntegrationTest {
             workerService.findById(0L);
         });
 
-        assertEquals("Worker with the given ID does not exist", thrown.getPrettyErrorMessage());
+        assertEquals("Worker with ID '0' does not exist", thrown.getPrettyErrorMessage());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class WorkerServiceIntegrationTest {
         AppException thrown = Assertions.assertThrows(AppException.class, () -> {
             workerService.findByIdToDto(0L);
         });
-        assertEquals("Worker with the given ID does not exist", thrown.getPrettyErrorMessage());
+        assertEquals("Worker with ID '0' does not exist", thrown.getPrettyErrorMessage());
     }
 
     @Test
@@ -199,7 +199,7 @@ public class WorkerServiceIntegrationTest {
         AppException thrown = Assertions.assertThrows(AppException.class, () -> {
             workerService.transferWorker(workerInfoDto);
         });
-        assertEquals("Worker with the given '0' does not exist", thrown.getPrettyErrorMessage());
+        assertEquals("Worker with ID '0' does not exist", thrown.getPrettyErrorMessage());
     }
 
     @Test
@@ -218,6 +218,6 @@ public class WorkerServiceIntegrationTest {
         AppException thrown = Assertions.assertThrows(AppException.class, () -> {
             workerService.deleteById(0L);
         });
-        assertEquals("Worker with the given '0' does not exist", thrown.getPrettyErrorMessage());
+        assertEquals("Worker with ID '0' does not exist", thrown.getPrettyErrorMessage());
     }
 }

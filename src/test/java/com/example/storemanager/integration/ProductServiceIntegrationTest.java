@@ -66,15 +66,6 @@ public class ProductServiceIntegrationTest {
 
     @Test
     @Transactional
-    public void findByNameFailed() {
-        AppException thrown = Assertions.assertThrows(AppException.class, () -> {
-            productService.findByName("Random Name" + StringUtils.randomAlphanumeric(10));
-        });
-        assertEquals("Product with the given name does not exist", thrown.getPrettyErrorMessage());
-    }
-
-    @Test
-    @Transactional
     public void findByProductNotInSuccessful() {
         Store store = testUtil.createPersistentStoreWithStock();
 
